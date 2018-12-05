@@ -1,0 +1,30 @@
+[DEBUG][2018-11-30 14:54:58,982][org.apache.ibatis.logging.LogFactory]Logging initialized using 'class org.apache.ibatis.logging.slf4j.Slf4jImpl' adapter.
+[DEBUG][2018-11-30 14:54:59,185][org.apache.ibatis.datasource.pooled.PooledDataSource]PooledDataSource forcefully closed/removed all connections.
+[DEBUG][2018-11-30 14:54:59,185][org.apache.ibatis.datasource.pooled.PooledDataSource]PooledDataSource forcefully closed/removed all connections.
+[DEBUG][2018-11-30 14:54:59,185][org.apache.ibatis.datasource.pooled.PooledDataSource]PooledDataSource forcefully closed/removed all connections.
+[DEBUG][2018-11-30 14:54:59,185][org.apache.ibatis.datasource.pooled.PooledDataSource]PooledDataSource forcefully closed/removed all connections.
+[DEBUG][2018-11-30 14:54:59,389][org.apache.ibatis.transaction.jdbc.JdbcTransaction]Opening JDBC Connection
+[DEBUG][2018-11-30 14:54:59,888][org.apache.ibatis.datasource.pooled.PooledDataSource]Created connection 665372494.
+[DEBUG][2018-11-30 14:54:59,888][org.apache.ibatis.transaction.jdbc.JdbcTransaction]Setting autocommit to false on JDBC Connection [com.mysql.jdbc.JDBC4Connection@27a8c74e]
+[DEBUG][2018-11-30 14:54:59,888][com.boilfish.ShortURL.mapper.UrlMapper.insertUrl]==>  Preparing: insert into url (shortUrl,longUrl,userId,timeStamp) values (?,?,?,?) 
+[DEBUG][2018-11-30 14:54:59,967][com.boilfish.ShortURL.mapper.UrlMapper.insertUrl]==> Parameters: gr5tl1(String), http://www.baidu.com(String), 0(Integer), 2018-11-30 14:54:58.56(Timestamp)
+[DEBUG][2018-11-30 14:54:59,967][com.boilfish.ShortURL.mapper.UrlMapper.insertUrl]<==    Updates: 1
+[DEBUG][2018-11-30 14:54:59,967][org.apache.ibatis.transaction.jdbc.JdbcTransaction]Rolling back JDBC Connection [com.mysql.jdbc.JDBC4Connection@27a8c74e]
+[DEBUG][2018-11-30 14:54:59,967][org.apache.ibatis.transaction.jdbc.JdbcTransaction]Resetting autocommit to true on JDBC Connection [com.mysql.jdbc.JDBC4Connection@27a8c74e]
+[DEBUG][2018-11-30 14:54:59,982][org.apache.ibatis.transaction.jdbc.JdbcTransaction]Closing JDBC Connection [com.mysql.jdbc.JDBC4Connection@27a8c74e]
+[DEBUG][2018-11-30 14:54:59,982][org.apache.ibatis.datasource.pooled.PooledDataSource]Returned connection 665372494 to pool.
+[DEBUG][2018-11-30 15:07:07,953][org.apache.ibatis.logging.LogFactory]Logging initialized using 'class org.apache.ibatis.logging.slf4j.Slf4jImpl' adapter.
+[DEBUG][2018-11-30 15:07:08,156][org.apache.ibatis.datasource.pooled.PooledDataSource]PooledDataSource forcefully closed/removed all connections.
+[DEBUG][2018-11-30 15:07:08,156][org.apache.ibatis.datasource.pooled.PooledDataSource]PooledDataSource forcefully closed/removed all connections.
+[DEBUG][2018-11-30 15:07:08,156][org.apache.ibatis.datasource.pooled.PooledDataSource]PooledDataSource forcefully closed/removed all connections.
+[DEBUG][2018-11-30 15:07:08,156][org.apache.ibatis.datasource.pooled.PooledDataSource]PooledDataSource forcefully closed/removed all connections.
+[DEBUG][2018-11-30 15:07:08,328][org.apache.ibatis.transaction.jdbc.JdbcTransaction]Opening JDBC Connection
+[DEBUG][2018-11-30 15:07:08,743][org.apache.ibatis.datasource.pooled.PooledDataSource]Created connection 665372494.
+[DEBUG][2018-11-30 15:07:08,743][org.apache.ibatis.transaction.jdbc.JdbcTransaction]Setting autocommit to false on JDBC Connection [com.mysql.jdbc.JDBC4Connection@27a8c74e]
+[DEBUG][2018-11-30 15:07:08,759][com.boilfish.ShortURL.mapper.UrlMapper.insertUrl]==>  Preparing: insert into url (shortUrl,longUrl,userId,timeStamp) values (?,?,?,?) 
+[DEBUG][2018-11-30 15:07:08,806][com.boilfish.ShortURL.mapper.UrlMapper.insertUrl]==> Parameters: gr5tl1(String), http://www.baidu.com(String), 0(Integer), 2018-11-30 15:07:07.611(Timestamp)
+[DEBUG][2018-11-30 15:07:08,806][com.boilfish.ShortURL.mapper.UrlMapper.insertUrl]<==    Updates: 1
+[DEBUG][2018-11-30 15:07:08,806][org.apache.ibatis.transaction.jdbc.JdbcTransaction]Committing JDBC Connection [com.mysql.jdbc.JDBC4Connection@27a8c74e]
+[DEBUG][2018-11-30 15:07:08,806][org.apache.ibatis.transaction.jdbc.JdbcTransaction]Resetting autocommit to true on JDBC Connection [com.mysql.jdbc.JDBC4Connection@27a8c74e]
+[DEBUG][2018-11-30 15:07:08,806][org.apache.ibatis.transaction.jdbc.JdbcTransaction]Closing JDBC Connection [com.mysql.jdbc.JDBC4Connection@27a8c74e]
+[DEBUG][2018-11-30 15:07:08,806][org.apache.ibatis.datasource.pooled.PooledDataSource]Returned connection 665372494 to pool.

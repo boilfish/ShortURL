@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boilfish.ShortURL.mapper.UrlMapper">
+    <insert id="insertUrl" useGeneratedKeys="true" keyProperty="id">
+        insert into url (shortUrl,longUrl,userId,timeStamp) values (#{shortUrl},#{longUrl},#{userId},#{timeStamp})
+    </insert>
+    
+    <select id="searchUrl" resultType="com.boilfish.ShortURL.model.UrlM">
+        select * from url
+        <where>
+            <if test="id != 0">
+                id = #{id}
+            </if>
+            <if test="shortUrl != null">
+                shortUrl = #{shortUrl}
+            </if>
+            <if test="longUrl != null">
+                longUrl = #{longUrl}
+            </if>
+            <if test="userId != 0">
+                userId = #{userId}
+            </if>
+        </where>
+    </select>
+    
+    <select id="checkShortUrl" resultType="int">
+        select count(*) from url where shortUrl = #{shortUrl} limit 1
+    </select>
+</mapper>

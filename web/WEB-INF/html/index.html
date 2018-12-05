@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/js/jquery-3.3.1.js"></script>
+    <script language="JavaScript">
+        $(document).ready(function () {
+            // $("#customBtn").toggle(
+            //     function () {
+            //         $("#customBtn").attr("value","返回随机短码模式");
+            //         $("#customDiv").attr("style","display: block");
+            //         $("#submit").attr("onclick","customSubmit");
+            //     },function () {
+            //         $("#customBtn").attr("value","自定义短链接码");
+            //         $("#customDiv").attr("style","display: none");
+            //         $("#submit").attr("onclick","submit");
+            //     }
+            // );
+            $("#customBtn").bind("click",clickCustomBtn);
+        });
+
+        var i=0;
+        function clickCustomBtn() {
+
+            if(i==0){
+                $("#customBtn").attr("value","返回随机短码模式");
+                $("#customDiv").attr("style","display: block");
+                $("#submit").attr("onclick","customSubmit()");
+                i=1;
+            }else {
+                $("#customBtn").attr("value","自定义短链接码");
+                $("#customDiv").attr("style","display: none");
+                $("#submit").attr("onclick","submit()");
+                i=0;
+            }
+        }
+        function submit() {
+            var url = $("#url").val();
+            var urlJson = {"longUrl":url};
+            if(isURL(url)){
+                $.ajax({
+                    url:"submit",
+                    method:"post",
+                    data: JSON.stringify(urlJson),
+                    dataType:"json",
+                    contentType:"application/json",
+                    success:function (data) {
+                        alert("写入数据库成功，短链接为"+data);
+                    }
+                });
+            }else {
+                alert("请输入带协议头的链接:http(s)://");
+                $("#url").focus();
+            }
+        }
+
+        function customSubmit() {
+            var url = $("#url").val();
+            var code = $("#code").val();
+            var urlJson = {"longUrl":url,"shortUrl":code};
+
+            if(checkCodeUrl(url,code)){
+                $.ajax({
+                    url:"customSubmit",
+                    method:"post",
+                    data: JSON.stringify(urlJson),
+                    dataType:"json",
+                    contentType:"application/json",
+                    success:function (data) {
+                        if(data.id == 0){
+                            alert(JSON.stringify(data));
+                            alert("短链接已存在，请换一个短连接");
+                        }else {
+                            alert("写入数据库成功，短链接为"+data.shortUrl+"长链接为"+data.longUrl);
+                        }
+                    },
+                    error: function() {
+                        alert("ajax提交失败");
+                    }
+                });
+            }
+        }
+
+        function isURL(str) {
+            var reg = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+            return reg.test(str);
+        }
+        function checkCodeUrl(url,code) {
+            var urlReg = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+            var codeReg = /^[a-z0-9]{6}$/;
+            if(urlReg.test(url) == false){
+                alert("请输入带协议头的链接:http(s)://");
+                $("#url").focus();
+                return false;
+            }
+            if(codeReg.test(code) == false){
+                alert("请输入6位小写字母加数字的短码");
+                $("#code").focus();
+                return false;
+            }
+            return true;
+        }
+
+
+    </script>
+</head>
+<body>
+<div>
+input URL:<input type="text" id="url"/>
+</div>
+
+<div id="customDiv" style="display: none">
+自定义短链接码：<input type="text" id="code"/>
+</div>
+
+<div>
+<input type="button" onclick="submit()" id="submit" value="submit"/>
+</div>
+<div>
+    <input type="button" id="customBtn" value="自定义短链接码"/>
+</div>
+</body>
+</html>
