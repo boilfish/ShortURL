@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="http://lib.sinaapp.com/js/jquery/1.12.4/jquery-1.12.4.min.js"></script>
+    <script language="JavaScript">
+        $(function () {
+            $("#registerBtn").bind("click",switchLogReg);
+            $("#loginSubmitBtn").bind("click",loginSubmit);
+            $("#registerSubmitBtn").bind("click",registerSubmit);
+        });
+
+        var i=0;
+        function switchLogReg() {
+            if(i==0){
+                $("#logDiv").attr("style","display: none");
+                $("#regDiv").attr("style","display: block");
+                $("#switchText").text("");
+                $("#registerBtn").attr("value","返回登录");
+                i=1;
+            }else {
+                $("#logDiv").attr("style","display: block");
+                $("#regDiv").attr("style","display: none");
+                $("#switchText").text("没有账号？");
+                $("#registerBtn").attr("value","注册一个");
+                i=0;
+            }
+        }
+        function loginSubmit() {
+            var username = $("#username").val();
+            var passwd = $("#passwd").val();
+            if(username == null || passwd == null || username == "" || passwd == ""){
+                alert("用户名或密码不能为空");
+            }else {
+                var userJson = {"name": username, "passwd": passwd};
+                $.ajax({
+                    url: "user/login.do",
+                    method: "post",
+                    data: JSON.stringify(userJson),
+                    dataType: "json",
+                    contentType: "application/json",
+                    success: function (data) {
+                        if(data ==1){
+                            $(location).attr('href','/');
+                        }
+                        else if (data == 2) alert("用户名不存在");
+                        else if (data == 3) alert("密码错误");
+                        else alert("unknown error");
+                    },
+                    error: function () {
+                        alert("ajax提交失败");
+                        // alert(XMLHttpRequest.status);
+                        // alert(XMLHttpRequest.readyState);
+                        // alert(textS9tatus);
+
+                    }
+                })
+            }
+        }
+        function registerSubmit() {
+            var username = $("#regUesrname").val();
+            var passwd = $("#regPasswd").val();
+            var mail = $("#regMail").val();
+            var i = registerRegCheck(username,passwd,mail);
+            if(i == 1){
+                var regUserJson = {"name": username, "passwd": passwd,"mail": mail};
+                $.ajax({
+                    url:"user/register.do",
+                    method:"post",
+                    data: JSON.stringify(regUserJson),
+                    dataType:"json",
+                    contentType:"application/json",
+                    success:function (data) {
+                        if(data == 1){
+                            alert("注册成功，现在跳转到首页");
+                            $(location).attr('href','/');
+                        }else if (data == 2){
+                            alert("用户名已存在，请换一个用户名");
+                        }else alert("unknown error");
+                    },
+                    error: function() {
+                        alert("ajax提交失败");
+                    }
+                });
+
+            }else if(i ==2) alert("请更换用户名，可以为字母数字下划线");
+            if(i == 3) alert("请更换密码，6位以上且包含字母数字");
+            if(i == 4) alert("邮箱格式错误");
+
+        }
+        // 返回1成功，2用户名错，3密码错，4邮箱错
+        function registerRegCheck(username, passwd, mail) {
+            var reg1 = /^[a-zA-Z0-9_]{2,16}$/; //用户名的
+            var reg2 = /^(?![A-Z]+$)(?![a-z]+$)(?!\d+$)(?![\W_]+$)\S{6,16}$/ //含有小写字母、大写字母、数字、特殊符号至少包含两种
+            var reg3 = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/; //邮箱的
+            if(!reg1.test(username)){
+                return 2;
+            }
+            if(!reg2.test(passwd)){
+                return 3;
+            }
+            if(!reg3.test(mail)){
+                return 4;
+            }
+            return 1;
+        }
+    </script>
+</head>
+<body>
+
+<div id="logDiv" style="display: block">
+    <form id="login">
+        <p>登录：</p>
+        <p>用户名：<input type="text" id="username"></p>
+        <p>密码：<input type="password" id="passwd"></p>
+        <p><input type="button" id="loginSubmitBtn" value="登录"/></p>
+    </form>
+</div>
+<div id="regDiv" style="display: none">
+    <form id="register">
+        <p>注册：</p>
+        <p>用户名：<input type="text" id="regUesrname"></p>
+        <p>密码：<input type="password" id="regPasswd"></p>
+        <p>邮箱：<input type="text" id="regMail"></p>
+        <p><input type="button" id="registerSubmitBtn" value="注册"></p>
+    </form>
+</div>
+<div id="switchDiv">
+    <label id="switchText">没有账号？</label><input type="button" id="registerBtn" value="注册一个">
+</div>
+
+</body>
+</html>

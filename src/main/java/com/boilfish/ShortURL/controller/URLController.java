@@ -2,22 +2,46 @@ package com.boilfish.ShortURL.controller;
 
 import com.boilfish.ShortURL.dao.UrlDAOI;
 import com.boilfish.ShortURL.model.UrlM;
+import com.boilfish.ShortURL.model.UserM;
 import com.boilfish.ShortURL.service.UrlServerI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
+
 @Controller
+//@SessionAttributes("currUser")
 public class URLController {
 
     @Autowired
     private UrlServerI UrlServer;
 
     @RequestMapping("/")
-    public String index(){
-        return "/WEB-INF/html/index.html";
+    public String index(){ return "/WEB-INF/html/index.html"; }
+
+    @ResponseBody
+    @RequestMapping("/checkUser.do")
+    //@ModelAttribute("currUser") UserM user
+    public Map<String,Object> checkUser(HttpSession session){
+        UserM user=(UserM) session.getAttribute("currUser");
+        Map<String,Object> map = new HashMap<String, Object>();
+        if(user == null) System.out.println("未登录");
+        else {
+            map.put("username", user.getName());
+            map.put("userid", new Integer(user.getId()));
+//        if(username != null ) {
+//            map.put("username", username);
+//            map.put("userid", userid);
+//        }
+        }
+        return map;
     }
 
     @RequestMapping("/{code}")
@@ -60,4 +84,25 @@ public class URLController {
 
     @RequestMapping("/404")
     public String notFound() {return "/WEB-INF/html/404.html";}
+
+    @RequestMapping("/login")
+    public String login(String username, String password){
+        return "WEB-INF/html/login.html";
+
+        //check
+
+//        int id=2333;
+//        // HttpSession session, int username, String password
+//        ModelAndView mav = new ModelAndView("redirect:/");
+//        mav.addObject("username",username);
+//        mav.addObject("userid",id);
+//        //session.setAttribute("username",username);
+//        return mav;
+    }
+
+    @RequestMapping("/logout")
+    public String logout(HttpSession session){
+        session.removeAttribute("currUser");
+        return "redirect:/";
+    }
 }

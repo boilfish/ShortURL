@@ -18,6 +18,22 @@
             //     }
             // );
             $("#customBtn").bind("click",clickCustomBtn);
+            $.get("checkUser.do",function (data) {
+                // alert(JSON.stringify(data));
+                // alert(data.username);
+                if(data.username != null && data.userid != 0){
+                    $("#userDiv").attr("style","display: block");
+                    $("#username").text(data.username);
+                    $("#userid").text(data.userid);
+                }
+            },"json");
+
+
+            //  if(username != null && userid != null){
+            //     $("#userDiv").attr("style","display: block");
+            //     $("#username").text(username);
+            //     $("#userid").text(userid);
+            //  }
         });
 
         var i=0;
@@ -47,6 +63,9 @@
                     contentType:"application/json",
                     success:function (data) {
                         alert("写入数据库成功，短链接为"+data);
+                    },
+                    error: function() {
+                        alert("ajax提交失败");
                     }
                 });
             }else {
@@ -119,6 +138,11 @@ input URL:<input type="text" id="url"/>
 </div>
 <div>
     <input type="button" id="customBtn" value="自定义短链接码"/>
+</div>
+<div id="userDiv" style="display: none">
+    已登录，用户名为<label id="username"></label>
+    <br/>
+    用户id为<label id="userid"></label>
 </div>
 </body>
 </html>
