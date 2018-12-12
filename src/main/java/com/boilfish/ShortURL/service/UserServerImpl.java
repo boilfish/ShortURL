@@ -1,12 +1,14 @@
 package com.boilfish.ShortURL.service;
 
 import com.boilfish.ShortURL.dao.UserDAOI;
+import com.boilfish.ShortURL.model.UrlM;
 import com.boilfish.ShortURL.model.UserM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 @Service("UserServer")
 public class UserServerImpl implements UserServerI {
@@ -53,5 +55,12 @@ public class UserServerImpl implements UserServerI {
         userDAO.insertUser(user);
     }
 
+    @Override
+    public List<UrlM> selectUrlByUser (UserM user) {return userDAO.selectUrlByUser(user);}
+
+    @Override
+    public void deleteUrlById(UrlM url){
+        userDAO.delUrlById(url);
+    }
 
 }

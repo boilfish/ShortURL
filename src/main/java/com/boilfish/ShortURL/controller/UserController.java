@@ -1,5 +1,6 @@
 package com.boilfish.ShortURL.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.boilfish.ShortURL.dao.UserDAOI;
 import com.boilfish.ShortURL.model.UrlM;
 import com.boilfish.ShortURL.model.UserM;
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.List;
 
 
 @Controller
@@ -56,6 +58,28 @@ public class UserController {
             return 1;
         }else if(i == 0) return 2;
         return i;
+    }
+
+    @ResponseBody
+    @RequestMapping("selectUrlByUser.do")
+    public JSONObject selectUrlByUser(@ModelAttribute("currUser") UserM user){
+        List<UrlM> urlList = userServer.selectUrlByUser(user);
+        JSONObject object = new JSONObject();
+        object.put("code",0);
+        object.put("msg","");
+        object.put("count",urlList.size());
+        object.put("data",urlList);
+        return object;
+    }
+
+    @RequestMapping("userUrl")
+    public String index(){ return "/WEB-INF/html/user.html"; }
+
+    @RequestMapping("deleteOneUrl.do")
+    public void delUrlById(@RequestBody UrlM url,@ModelAttribute("currUser") UserM user){
+        if(user.getId() == url.getUserId()) {
+            userServer.deleteUrlById(url);
+        }//校检session中的用户id是否与删除请求的用户id一致，防止恶意串号
     }
 
 }

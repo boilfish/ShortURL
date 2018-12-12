@@ -19,4 +19,10 @@
     <insert id="insertUser" useGeneratedKeys="true" keyProperty="id">
         insert into user (name, passwd, mail, timeStamp) values (#{name},#{passwd},#{mail},#{timeStamp})
     </insert>
+    <select id="selectUrlByUser" resultType="com.boilfish.ShortURL.model.UrlM">
+        select * from url where userId = #{id}
+    </select>
+    <delete id="deleteUrlById">
+        delete from url where id = #{id} and userId = #{userId}
+    </delete>
 </mapper>

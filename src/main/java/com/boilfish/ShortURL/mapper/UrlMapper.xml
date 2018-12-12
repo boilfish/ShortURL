@@ -27,4 +27,6 @@
     <select id="checkShortUrl" resultType="int">
         select count(*) from url where shortUrl = #{shortUrl} limit 1
     </select>
+
+
 </mapper>

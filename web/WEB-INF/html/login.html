@@ -61,8 +61,9 @@
         function registerSubmit() {
             var username = $("#regUesrname").val();
             var passwd = $("#regPasswd").val();
+            var repasswd = $("#reRegPasswd").val();
             var mail = $("#regMail").val();
-            var i = registerRegCheck(username,passwd,mail);
+            var i = registerRegCheck(username,passwd,repasswd,mail);
             if(i == 1){
                 var regUserJson = {"name": username, "passwd": passwd,"mail": mail};
                 $.ajax({
@@ -87,10 +88,11 @@
             }else if(i ==2) alert("请更换用户名，可以为字母数字下划线");
             if(i == 3) alert("请更换密码，6位以上且包含字母数字");
             if(i == 4) alert("邮箱格式错误");
+            if(i == 5) alert("两次输入的密码不一致，请重新输入");
 
         }
-        // 返回1成功，2用户名错，3密码错，4邮箱错
-        function registerRegCheck(username, passwd, mail) {
+        // 返回1成功，2用户名错，3密码错，4邮箱错, 5两次密码不一致
+        function registerRegCheck(username, passwd,repasswd, mail) {
             var reg1 = /^[a-zA-Z0-9_]{2,16}$/; //用户名的
             var reg2 = /^(?![A-Z]+$)(?![a-z]+$)(?!\d+$)(?![\W_]+$)\S{6,16}$/ //含有小写字母、大写字母、数字、特殊符号至少包含两种
             var reg3 = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/; //邮箱的
@@ -102,6 +104,9 @@
             }
             if(!reg3.test(mail)){
                 return 4;
+            }
+            if(passwd != repasswd){
+                return 5;
             }
             return 1;
         }
@@ -122,6 +127,7 @@
         <p>注册：</p>
         <p>用户名：<input type="text" id="regUesrname"></p>
         <p>密码：<input type="password" id="regPasswd"></p>
+        <p>再输一遍密码：<input type="password" id="reRegPasswd"></p>
         <p>邮箱：<input type="text" id="regMail"></p>
         <p><input type="button" id="registerSubmitBtn" value="注册"></p>
     </form>

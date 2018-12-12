@@ -62,19 +62,19 @@ public class URLController {
 
     @ResponseBody
     @RequestMapping("/submit")
-    public String submit(@RequestBody UrlM url){
-        UrlM tempUrl = UrlServer.packUrlM(url.getLongUrl());
+    public String submit(@RequestBody UrlM url,HttpSession session){
+        UrlM tempUrl = UrlServer.packUrlM(url.getLongUrl(),session);
         UrlServer.insertUrl(tempUrl);
         return tempUrl.getShortUrl();
     }
 
     @ResponseBody
     @RequestMapping("/customSubmit")
-    public UrlM customSubmit(@RequestBody UrlM url){
-        UrlM tempUrl = UrlServer.customPackUrlM(url.getLongUrl(),url.getShortUrl());
+    public UrlM customSubmit(@RequestBody UrlM url,HttpSession session){
+        UrlM tempUrl = UrlServer.customPackUrlM(url.getLongUrl(),url.getShortUrl(),session);
         if(tempUrl == null){
             UrlM m = new UrlM();
-            m.setId(0);
+            m.setId(1);//返回用户id为1时即认定短链接重复，返回id为0时未登录
             return m;
         }else {
             UrlServer.insertUrl(tempUrl);

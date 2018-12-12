@@ -1,6 +1,7 @@
 package com.boilfish.ShortURL.interceptor;
 
 
+import com.boilfish.ShortURL.model.UserM;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -11,12 +12,11 @@ import javax.servlet.http.HttpSession;
 public class LoginInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response, Object handler) throws Exception{
-        String username = (String) request.getSession().getAttribute("username");
-        if(username == null){
-           // System.out.println("sessionusername=null");
-            return true;
-        }else System.out.println(username);
-        return true;
+        UserM user = (UserM) request.getSession().getAttribute("currUser");
+        if(user == null){
+            response.sendRedirect("/login");
+            return false;
+        }else return true;
     }
 
     public void postHandle(HttpServletRequest request,

@@ -2,8 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/js/layui/css/layui.css">
     <title>Title</title>
     <script src="/js/jquery-3.3.1.js"></script>
+    <script src="/js/layui/layui.js"></script>
     <script language="JavaScript">
         $(document).ready(function () {
             // $("#customBtn").toggle(
@@ -87,8 +89,7 @@
                     dataType:"json",
                     contentType:"application/json",
                     success:function (data) {
-                        if(data.id == 0){
-                            alert(JSON.stringify(data));
+                        if(data.id == 1){
                             alert("短链接已存在，请换一个短连接");
                         }else {
                             alert("写入数据库成功，短链接为"+data.shortUrl+"长链接为"+data.longUrl);

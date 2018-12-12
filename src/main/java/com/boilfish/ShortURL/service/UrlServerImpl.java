@@ -2,9 +2,12 @@ package com.boilfish.ShortURL.service;
 
 import com.boilfish.ShortURL.dao.UrlDAOI;
 import com.boilfish.ShortURL.model.UrlM;
+import com.boilfish.ShortURL.model.UserM;
+import org.apache.tools.ant.taskdefs.condition.Http;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.Random;
 
@@ -28,9 +31,16 @@ public class UrlServerImpl implements UrlServerI {
     }
 
     @Override
-    public UrlM packUrlM(String longUrl){
+    public UrlM packUrlM(String longUrl, HttpSession session){
         UrlM tempUrl = new UrlM();
-
+        UserM user=(UserM) session.getAttribute("currUser");
+        if(user == null) {
+            //System.out.println("pack未登录");
+            tempUrl.setUserId(0);
+        }else {
+            //System.out.println("pack已登录");
+            tempUrl.setUserId(user.getId());
+        }
         tempUrl.setShortUrl(randomCode());
 
         while (checkShortUrl(tempUrl.getShortUrl()) != 0){
@@ -38,24 +48,28 @@ public class UrlServerImpl implements UrlServerI {
         }
 
         tempUrl.setLongUrl(longUrl);
-        tempUrl.setUserId(0);
+
         tempUrl.setTimeStamp(new Date());
         return tempUrl;
     }
 
     @Override
-    public UrlM customPackUrlM(String longUrl,String shortUrl){
+    public UrlM customPackUrlM(String longUrl,String shortUrl, HttpSession session){
         UrlM tempUrl = new UrlM();
 
         tempUrl.setShortUrl(shortUrl);
-        System.out.println(shortUrl);
-        System.out.println(checkShortUrl(shortUrl));
-        System.out.println("-----------");
+
+        UserM user=(UserM) session.getAttribute("currUser");
+        if(user == null) {
+            tempUrl.setUserId(0);
+        }else {
+            tempUrl.setUserId(user.getId());
+        }
+
         if (checkShortUrl(shortUrl) != 0){
             return null;//校检用户输入的url是否重复，重复返回空
         }else {
             tempUrl.setLongUrl(longUrl);
-            tempUrl.setUserId(0);
             tempUrl.setTimeStamp(new Date());
             return tempUrl;
         }
@@ -71,4 +85,5 @@ public class UrlServerImpl implements UrlServerI {
 
     @Override
     public String searchLongUrl(String shortUrl){return UrlDAO.searchLongUrl(shortUrl);}
+
 }
