@@ -22,7 +22,7 @@ public class UserServerImpl implements UserServerI {
         UserM tempUser = userDAO.selectUserByUsername(user.getName());
         HashMap map = new HashMap();
         int authStateCode=0;
-        if(tempUser == null) authStateCode=2;
+        if(tempUser == null) {authStateCode=2;}else
         if(tempUser.getPasswd().equals(user.getPasswd())){
             authStateCode=1;
         }else

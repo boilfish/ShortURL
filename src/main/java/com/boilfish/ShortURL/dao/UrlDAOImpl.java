@@ -47,7 +47,7 @@ public class UrlDAOImpl implements UrlDAOI{
 
         UrlM tempurl = new UrlM();
         tempurl.setShortUrl(shortUrl);
-        System.out.println(tempurl.toString());
+        //System.out.println(tempurl.toString());
         UrlM url = sqlSession.selectOne("com.boilfish.ShortURL.mapper.UrlMapper.searchUrl",tempurl);
         sqlSession.close();
         if(url == null){

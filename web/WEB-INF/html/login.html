@@ -2,8 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" href="/js/layui/css/layui.css">
+    <title>Url302-登录</title>
     <script src="http://lib.sinaapp.com/js/jquery/1.12.4/jquery-1.12.4.min.js"></script>
+    <script src="/js/layui/layui.js"></script>
     <script language="JavaScript">
         $(function () {
             $("#registerBtn").bind("click",switchLogReg);
@@ -14,16 +16,23 @@
         var i=0;
         function switchLogReg() {
             if(i==0){
-                $("#logDiv").attr("style","display: none");
-                $("#regDiv").attr("style","display: block");
+                // $("#logDiv").attr("style","display: none");
+                // $("#regDiv").attr("style","display: block");
                 $("#switchText").text("");
-                $("#registerBtn").attr("value","返回登录");
+                // //$("#registerBtn").attr("value","返回登录");
+                $("#registerBtn").text("返回登录");
+                $("#rePasswdDiv").attr("style","display: block");
+                $("#mailDiv").attr("style","display: block");
+                $("#loginSubmitBtn").hide();
+                $("#registerSubmitBtn").show();
                 i=1;
             }else {
-                $("#logDiv").attr("style","display: block");
-                $("#regDiv").attr("style","display: none");
                 $("#switchText").text("没有账号？");
-                $("#registerBtn").attr("value","注册一个");
+                $("#registerBtn").text("注册一个");
+                $("#rePasswdDiv").attr("style","display: none");
+                $("#mailDiv").attr("style","display: none");
+                $("#loginSubmitBtn").show();
+                $("#registerSubmitBtn").hide();
                 i=0;
             }
         }
@@ -59,8 +68,8 @@
             }
         }
         function registerSubmit() {
-            var username = $("#regUesrname").val();
-            var passwd = $("#regPasswd").val();
+            var username = $("#username").val();
+            var passwd = $("#passwd").val();
             var repasswd = $("#reRegPasswd").val();
             var mail = $("#regMail").val();
             var i = registerRegCheck(username,passwd,repasswd,mail);
@@ -111,30 +120,100 @@
             return 1;
         }
     </script>
-</head>
-<body>
+    <style>
 
-<div id="logDiv" style="display: block">
-    <form id="login">
-        <p>登录：</p>
-        <p>用户名：<input type="text" id="username"></p>
-        <p>密码：<input type="password" id="passwd"></p>
-        <p><input type="button" id="loginSubmitBtn" value="登录"/></p>
+        .window{
+
+            width: 400px;
+
+            position: absolute;
+
+            margin-left: -200px;
+
+            margin-top: -80px;
+
+            top: 35%;
+
+            left: 50%;
+
+            display: block;
+
+            z-index: 2000;
+
+            background: #fff;
+
+            padding: 20px 0px;
+
+        }
+
+    </style>
+</head>
+<body style="background: #f1f1f1;">
+
+<div class="window">
+    <form class="layui-form" method="post">
+        <div class="layui-form-item" style="margin-right: 100px;margin-top: 20px;">
+            <label class="layui-form-label">用户名：</label>
+            <div class="layui-input-block">
+                <input type="text" id="username" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+            </div>
+
+        </div>
+        <div class="layui-form-item" >
+            <label class="layui-form-label">密&nbsp;&nbsp;&nbsp;&nbsp;码：</label>
+            <div class="layui-input-inline">
+                <input type="password" id="passwd" placeholder="请输入密码" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item" id="rePasswdDiv" style="display: none">
+            <label class="layui-form-label">重复密码：</label>
+            <div class="layui-input-inline">
+                <input type="password" id="reRegPasswd" placeholder="请再次输入密码" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item" id="mailDiv" style="display: none">
+            <label class="layui-form-label">邮&nbsp;&nbsp;&nbsp;&nbsp;箱：</label>
+            <div class="layui-input-inline">
+                <input type="text" id="regMail" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <!--<input type="checkbox" lay-skin="primary" checked>-->
+            <div style="text-align: center;">
+                <input type="button" class="layui-btn" id="loginSubmitBtn" value="登录"/>
+                <input type="button" class="layui-btn" id="registerSubmitBtn" value="注册" style="display: none"/>
+            </div>
+        </div>
+        <div class="layui-form-item" style="margin-left: 10%">
+            <label style="color: #9F9F9F" id="switchText" >没有账号？</label><a style="color: #9F9F9F;text-decoration: underline" href="javascript:void(0)" id="registerBtn">注册一个</a>
+        </div>
+        <div class="layui-form-item" style="margin-left: 10%">
+            <a style="color: #9F9F9F;" href="/">返回首页</a>
+        </div>
     </form>
 </div>
-<div id="regDiv" style="display: none">
-    <form id="register">
-        <p>注册：</p>
-        <p>用户名：<input type="text" id="regUesrname"></p>
-        <p>密码：<input type="password" id="regPasswd"></p>
-        <p>再输一遍密码：<input type="password" id="reRegPasswd"></p>
-        <p>邮箱：<input type="text" id="regMail"></p>
-        <p><input type="button" id="registerSubmitBtn" value="注册"></p>
-    </form>
-</div>
-<div id="switchDiv">
-    <label id="switchText">没有账号？</label><input type="button" id="registerBtn" value="注册一个">
-</div>
+
+<!--<div id="logDiv" style="display: block">-->
+    <!--<form id="login">-->
+        <!--<p>登录：</p>-->
+        <!--<p>用户名：<input type="text" id="username"></p>-->
+        <!--<p>密码：<input type="password" id="passwd"></p>-->
+        <!--<p><input type="button" id="loginSubmitBtn" value="登录"/></p>-->
+    <!--</form>-->
+<!--</div>-->
+<!--<div id="regDiv" style="display: none">-->
+    <!--<form id="register">-->
+        <!--<p>注册：</p>-->
+        <!--<p>用户名：<input type="text" id="regUesrname"></p>-->
+        <!--<p>密码：<input type="password" id="regPasswd"></p>-->
+        <!--<p>再输一遍密码：<input type="password" id="reRegPasswd"></p>-->
+        <!--<p>邮箱：<input type="text" id="regMail"></p>-->
+        <!--<p><input type="button" id="registerSubmitBtn" value="注册"></p>-->
+    <!--</form>-->
+<!--</div>-->
+<!--<div id="switchDiv">-->
+    <!--&lt;!&ndash;<label id="switchText">没有账号？</label><input type="button" id="registerBtn" value="注册一个">&ndash;&gt;-->
+<!--</div>-->
 
 </body>
 </html>

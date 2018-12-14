@@ -32,14 +32,14 @@ public class URLController {
     public Map<String,Object> checkUser(HttpSession session){
         UserM user=(UserM) session.getAttribute("currUser");
         Map<String,Object> map = new HashMap<String, Object>();
-        if(user == null) System.out.println("未登录");
-        else {
+        if(user != null) //System.out.println("未登录");
+         {
             map.put("username", user.getName());
             map.put("userid", new Integer(user.getId()));
 //        if(username != null ) {
 //            map.put("username", username);
 //            map.put("userid", userid);
-//        }
+//
         }
         return map;
     }
