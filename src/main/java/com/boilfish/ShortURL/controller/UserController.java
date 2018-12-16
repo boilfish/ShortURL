@@ -13,6 +13,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
@@ -62,12 +63,19 @@ public class UserController {
 
     @ResponseBody
     @RequestMapping("selectUrlByUser.do")
-    public JSONObject selectUrlByUser(@ModelAttribute("currUser") UserM user){
-        List<UrlM> urlList = userServer.selectUrlByUser(user);
+    public JSONObject selectUrlByUser(@ModelAttribute("currUser") UserM user, HttpServletRequest request){
+        int page = Integer.parseInt(request.getParameter("page")) ;
+        int page2=(page-1)*5;
+        int limit = Integer.parseInt(request.getParameter("limit"));
+        limit=5;
+
+
+        List<UrlM> urlList = userServer.selectUrlByUser(user,page2,limit);
+        int count = userServer.selectUrlCountByUser(user);
         JSONObject object = new JSONObject();
         object.put("code",0);
         object.put("msg","");
-        object.put("count",urlList.size());
+        object.put("count",count);
         object.put("data",urlList);
         return object;
     }

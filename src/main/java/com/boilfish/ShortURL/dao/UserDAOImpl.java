@@ -10,7 +10,9 @@ import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository("UserDAO")
 public class UserDAOImpl implements UserDAOI{
@@ -54,7 +56,7 @@ public class UserDAOImpl implements UserDAOI{
     }
 
     @Override
-    public List<UrlM> selectUrlByUser (UserM user){
+    public List<UrlM> selectUrlByUser(UserM user, int page, int limit){
         String resource = "mybatis-config.xml";
         InputStream inputStream = null;
         try {
@@ -66,9 +68,32 @@ public class UserDAOImpl implements UserDAOI{
                 new SqlSessionFactoryBuilder().build(inputStream);
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        List<UrlM> urlList = sqlSession.selectList("com.boilfish.ShortURL.mapper.UserMapper.selectUrlByUser",user);
+        Map<String,Object> map = new HashMap<String, Object>();
+        map.put("id",user.getId());
+        map.put("page",page);
+        map.put("limit",limit);
+
+        List<UrlM> urlList = sqlSession.selectList("com.boilfish.ShortURL.mapper.UserMapper.selectUrlByUser",map);
         sqlSession.close();
         return urlList;
+    }
+
+    @Override
+    public int selectUrlCountByUser(UserM user){
+        String resource = "mybatis-config.xml";
+        InputStream inputStream = null;
+        try {
+            inputStream = Resources.getResourceAsStream(resource);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        SqlSessionFactory sqlSessionFactory =
+                new SqlSessionFactoryBuilder().build(inputStream);
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        int count = sqlSession.selectOne("com.boilfish.ShortURL.mapper.UserMapper.selectUrlCountByUser",user);
+        sqlSession.close();
+        return count;
     }
 
     @Override

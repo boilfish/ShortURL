@@ -30,7 +30,7 @@
                     $("#headLogin").attr("style","display: block");
                     $("#headUnLogin").attr("style","display: none");
                     $("#headUser").html("<img src=\"http://t.cn/EUJSIhs\" class=\"layui-nav-img\">"+data.username+"<span class=\"layui-nav-more\"></span>");
-                }
+                }else layer.tips('注册后可以删除自己的短链接', '#tips',{tips:3});
             },"json");
 
 
@@ -39,6 +39,7 @@
             //     $("#username").text(username);
             //     $("#userid").text(userid);
             //  }
+
         });
 
         var i=0;
@@ -79,7 +80,8 @@
                     }
                 });
             }else {
-                alert("请输入带协议头的链接:http(s)://");
+                //alert("请输入带协议头的链接:http(s)://");
+                layer.tips('请输入带协议头的链接:http(s)://', '#url');
                 $("#url").focus();
             }
         }
@@ -98,7 +100,8 @@
                     contentType:"application/json",
                     success:function (data) {
                         if(data.id == 1){
-                            alert("短链接已存在，请换一个短连接");
+                            //alert("短链接已存在，请换一个短连接");
+                            layer.tips('短链接已存在，请换一个短链接', '#code');
                         }else {
                             //alert("写入数据库成功，短链接为"+data.shortUrl+"长链接为"+data.longUrl);
                             $("#urlDisplayDiv").attr("class","layui-show");
@@ -121,12 +124,14 @@
             var urlReg = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
             var codeReg = /^[a-z0-9]{6}$/;
             if(urlReg.test(url) == false){
-                alert("请输入带协议头的链接:http(s)://");
+                //alert("请输入带协议头的链接:http(s)://");
+                layer.tips('请输入带协议头的链接:http(s)://', '#url');
                 $("#url").focus();
                 return false;
             }
             if(codeReg.test(code) == false){
-                alert("请输入6位小写字母加数字的短码");
+                //alert("请输入6位小写字母加数字的短码");
+                layer.tips('请输入6位小写字母加数字的短码', '#code');
                 $("#code").focus();
                 return false;
             }
@@ -142,6 +147,10 @@
         });
         layui.use('form', function(){
             var form = layui.form;
+        });
+        layui.use('layer', function(){
+            var layer = layui.layer;
+
         });
     </script>
 </head>
@@ -163,7 +172,7 @@
             </li>
         </ul>
         <ul id = headUnLogin style="display: block" class="layui-nav layui-layout-right">
-            <li class="layui-nav-item"><a href="/login">登录/注册</a></li>
+            <li id="tips" class="layui-nav-item"><a href="/login">登录/注册</a></li>
         </ul>
     </div>
     <div class="layui-main">
@@ -214,7 +223,7 @@
     <div class="layui-footer" style="left:0px;text-align: right;">
         <!-- 底部固定区域 -->
         © url302.pw - ShortURL&nbsp;&nbsp;&nbsp;&nbsp;
-        <a href="https://www.github.com" target="_blank" style="color: #9F9F9F;font-size: 20px">/*GitHub*/</a>
+        <a href="https://github.com/boilfish/ShortURL" target="_blank" style="color: #9F9F9F;font-size: 20px">/*GitHub*/</a>
     </div>
 
     </div>

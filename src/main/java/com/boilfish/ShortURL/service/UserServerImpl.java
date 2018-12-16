@@ -56,7 +56,10 @@ public class UserServerImpl implements UserServerI {
     }
 
     @Override
-    public List<UrlM> selectUrlByUser (UserM user) {return userDAO.selectUrlByUser(user);}
+    public List<UrlM> selectUrlByUser(UserM user, int page, int limit) {return userDAO.selectUrlByUser(user,page,limit);}
+
+    @Override
+    public int selectUrlCountByUser (UserM user){return userDAO.selectUrlCountByUser(user);}
 
     @Override
     public void deleteUrlById(UrlM url){

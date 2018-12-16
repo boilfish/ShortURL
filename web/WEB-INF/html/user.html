@@ -18,20 +18,22 @@
                     elem: '#urlTable',
                     url: '/user/selectUrlByUser.do',
                     page: 'true',
+                    limit:5,
+                    limits:[5],
+
                     cols: [[
-                        {field: 'id', title: 'ID', width: '15%', fixed: 'left', sort: 'true'},
-                        {field: 'shortUrl', title: '短链接', minWidth: '200',templet:function (d) {
-                                var surl = "http://url302.pw/"+d.shortUrl;
-                                return surl;
-                            }},
-                        {field: 'longUrl', title: '长链接', minWidth: '200'},
-                        {
-                            field: 'timeStamp', title: '时间', minWidth: '160', sort: 'true', templet: function (d) {
+                        {field: 'timeStamp', fixed: 'left', title: '创建时间', minWidth: '160', sort: 'true', templet: function (d) {
                                 var date = new Date();
                                 date.setTime(d.timeStamp);
                                 return date.Format("yyyy-MM-dd hh:mm:ss");
                             }
                         },
+                        {field: 'shortUrl', title: '短链接', minWidth: '180',templet:function (d) {
+                                var surl = "http://url302.pw/"+d.shortUrl;
+                                return surl;
+                            }},
+                        {field: 'longUrl', title: '长链接', minWidth: '500'},
+
                         {fixed: 'right', width: '20%', align: 'center', toolbar: '#barDemo'}
                     ]]
                 });
@@ -122,7 +124,7 @@
     <div class="layui-footer" style="left:0px;text-align: right;">
         <!-- 底部固定区域 -->
         © url302.pw - ShortURL&nbsp;&nbsp;&nbsp;&nbsp;
-        <a href="https://www.github.com" target="_blank" style="color: #9F9F9F;font-size: 20px">/*GitHub*/</a>
+        <a href="https://github.com/boilfish/ShortURL" target="_blank" style="color: #9F9F9F;font-size: 20px">/*GitHub*/</a>
     </div>
 </div>
 </body>

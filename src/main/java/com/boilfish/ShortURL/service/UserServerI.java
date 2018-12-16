@@ -14,7 +14,10 @@ public interface UserServerI {
 
     void registUser(UserM user);
 
-    List<UrlM> selectUrlByUser(UserM user);
+
+    List<UrlM> selectUrlByUser(UserM user, int page, int limit);
+
+    int selectUrlCountByUser(UserM user);
 
     void deleteUrlById(UrlM url);
 }

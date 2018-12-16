@@ -19,6 +19,7 @@
           <element id="library" level="project" name="mybatis-spring-1.3.1" />
           <element id="library" level="project" name="mysql-connector-java-5.1.41" />
           <element id="library" level="project" name="log4j-core-2.11.1" />
+          <element id="library" level="project" name="cglib-3.2.5" />
         </element>
       </element>
     </root>
