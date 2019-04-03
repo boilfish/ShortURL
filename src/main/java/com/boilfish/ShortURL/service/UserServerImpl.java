@@ -6,12 +6,15 @@ import com.boilfish.ShortURL.model.UserM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.*;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 @Service("UserServer")
 public class UserServerImpl implements UserServerI {
+
+    private static final String SECRETKEY = "admintest";
 
     @Autowired
     private UserDAOI userDAO;
@@ -64,6 +67,12 @@ public class UserServerImpl implements UserServerI {
     @Override
     public void deleteUrlById(UrlM url){
         userDAO.delUrlById(url);
+    }
+
+    @Override
+    public int ManageLoginAuth(String passwd){
+        if(passwd.equals(SECRETKEY)) return 1;
+        else return 0;
     }
 
 }

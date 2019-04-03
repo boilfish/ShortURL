@@ -90,4 +90,10 @@ public class UserController {
         }//校检session中的用户id是否与删除请求的用户id一致，防止恶意串号
     }
 
+    @ResponseBody
+    @RequestMapping("manageLogin.do")
+    public int ManageLoginCheck(@RequestParam String passwd){
+        return userServer.ManageLoginAuth(passwd);
+    }//返回1登录成功，返回0密码错误
+
 }

@@ -20,4 +20,6 @@ public interface UserServerI {
     int selectUrlCountByUser(UserM user);
 
     void deleteUrlById(UrlM url);
+
+    int ManageLoginAuth(String passwd);
 }

@@ -11,6 +11,7 @@
             $("#registerBtn").bind("click",switchLogReg);
             $("#loginSubmitBtn").bind("click",loginSubmit);
             $("#registerSubmitBtn").bind("click",registerSubmit);
+            $("#manageBtn").bind("click",manageLogin);
         });
 
         var i=0;
@@ -134,6 +135,56 @@
             }
             return 1;
         }
+        function manageLogin() {
+            layer.prompt({
+                formType: 1,
+                title: '请输入预置管理员密钥',
+                area: ['200px', '20px'] //自定义文本域宽高
+            }, function(value, index, elem){
+                // $.ajax({
+                //     url:"user/manageLogin.do",
+                //     method:"post",
+                //     data: value,
+                //     dataType:"int",
+                //     contentType:"text/plain",
+                //     success:function (data) {
+                //         if(data == 1){
+                //             layer.msg('注册成功，现在跳转到首页',
+                //                 {anim: 0, time: 2000},
+                //                 function(){
+                //                     //do something
+                //                     $(location).attr('href','/');
+                //                 });
+                //         }else if (data == 2){
+                //             //alert("用户名已存在，请换一个用户名");
+                //             layer.tips('用户名已存在，请换一个用户名', '#username');
+                //         }else alert("unknown error");
+                //     },
+                //     error: function() {
+                //         alert("ajax提交失败");
+                //     }
+                // });
+                $.post(
+                    "user/manageLogin.do",
+                    {'passwd':value},
+                    function (data) {
+                        if(data == 1)
+                            layer.msg('管理员登录成功，现在跳转到管理界面',
+                                {anim: 0, time: 2000},
+                                function(){
+                                    //do something
+                                    $(location).attr('href','manage');
+                                });
+                        else if(data == 0)
+                            layer.msg('密码错误，密码为16位包含字母数字特殊符号的字符串');
+                    }
+                )
+                    .error(function () {
+                       layer.msg('ajax提交失败')
+                    });
+                layer.close(index);
+            });
+        }
     </script>
     <style>
 
@@ -204,6 +255,9 @@
         </div>
         <div class="layui-form-item" style="margin-left: 10%">
             <a style="color: #9F9F9F;" href="/">返回首页</a>
+        </div>
+        <div class="layui-form-item" style="margin-left: 10%">
+            <a style="color: #9F9F9F;text-decoration: underline" href="javascript:void(0)" id="manageBtn">管理员入口</a>
         </div>
     </form>
 </div>
