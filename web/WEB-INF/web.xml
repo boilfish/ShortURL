@@ -24,6 +24,7 @@
     <servlet-mapping>
         <servlet-name>default</servlet-name>
         <url-pattern>/favicon.ico</url-pattern>
+        <url-pattern>/logo.png</url-pattern>
     </servlet-mapping>
     <filter>
         <filter-name>CharacterEncodingFilter</filter-name>

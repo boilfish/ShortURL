@@ -14,7 +14,7 @@ import java.util.List;
 @Service("UserServer")
 public class UserServerImpl implements UserServerI {
 
-    private static final String SECRETKEY = "admintest";
+    private static final String SECRETKEY = "testadmin";
 
     @Autowired
     private UserDAOI userDAO;

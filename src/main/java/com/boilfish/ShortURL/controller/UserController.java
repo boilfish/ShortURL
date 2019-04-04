@@ -92,8 +92,14 @@ public class UserController {
 
     @ResponseBody
     @RequestMapping("manageLogin.do")
-    public int ManageLoginCheck(@RequestParam String passwd){
-        return userServer.ManageLoginAuth(passwd);
+    public int ManageLoginCheck(@RequestParam String passwd,ModelMap model){
+        if(userServer.ManageLoginAuth(passwd) == 1){
+            UserM tempuser = new UserM();
+            tempuser.setId(0);
+            tempuser.setName("admin");
+            model.addAttribute("currUser",tempuser);
+            return 1;
+        }else return 0;
     }//返回1登录成功，返回0密码错误
 
 }
