@@ -19,5 +19,6 @@
     <mappers>
         <mapper resource="com/boilfish/ShortURL/mapper/UrlMapper.xml"/>
         <mapper resource="com/boilfish/ShortURL/mapper/UserMapper.xml"/>
+        <mapper resource="com/boilfish/ShortURL/mapper/ManageMapper.xml"/>
     </mappers>
 </configuration>

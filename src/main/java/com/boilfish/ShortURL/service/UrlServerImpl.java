@@ -49,7 +49,7 @@ public class UrlServerImpl implements UrlServerI {
 
         tempUrl.setLongUrl(longUrl);
 
-        tempUrl.setTimeStamp(new Date());
+        tempUrl.setTimeStamp(new Date());//获取当前系统时间
         return tempUrl;
     }
 
