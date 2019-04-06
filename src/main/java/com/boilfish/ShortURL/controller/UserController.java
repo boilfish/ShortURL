@@ -7,6 +7,7 @@ import com.boilfish.ShortURL.model.UserM;
 import com.boilfish.ShortURL.service.UserServerI;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -84,6 +85,7 @@ public class UserController {
     public String index(){ return "/WEB-INF/html/user.html"; }
 
     @RequestMapping("deleteOneUrl.do")
+    @ResponseStatus(HttpStatus.OK)
     public void delUrlById(@RequestBody UrlM url,@ModelAttribute("currUser") UserM user){
         if(user.getId() == url.getUserId()) {
             userServer.deleteUrlById(url);

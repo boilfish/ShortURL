@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import java.sql.DataTruncation;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,6 +26,9 @@ public class ManageController {
     @RequestMapping("statistics")
     public String statistics() {return "/WEB-INF/html/statistics.html";}
 
+    @RequestMapping("urlsearch")
+    public String urlSearch() {return "/WEB-INF/html/urlsearch.html";}
+
     @ResponseBody
     @RequestMapping("selectStatistics.do")
     public JSONObject selectStatistics(){
@@ -34,4 +38,5 @@ public class ManageController {
         object.putAll(map);
         return object;
     }
+
 }

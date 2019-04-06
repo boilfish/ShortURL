@@ -7,6 +7,12 @@
     <script src="http://lib.sinaapp.com/js/jquery/1.12.4/jquery-1.12.4.min.js"></script>
     <script src="/js/layui/layui.js"></script>
     <script language="JavaScript">
+        layui.use(['element','form','layer'],function () {
+            var element = layui.element
+                ,form = layui.form
+                ,layer = layui.layer;
+
+
         $(document).ready(function () {
             // $("#customBtn").toggle(
             //     function () {
@@ -20,6 +26,7 @@
             //     }
             // );
             $("#customBtn").bind("click",clickCustomBtn);
+            $("#submit").bind("click",submitU);
             $.get("checkUser.do",function (data) {
                 if(data.username != null && data.userid != 0){//已登录状态
                     $("#headLogin").attr("style","display: block");
@@ -45,78 +52,108 @@
         });
 
         var i=0;
+        //i=0时无自定义短码，i=1时自定义短码模式
         function clickCustomBtn() {
-
             if(i==0){
                 // $("#customBtn").attr("value","返回随机短码模式");
                 $("#customBtn").text("返回随机短码模式");
                 $("#customDiv").attr("class","layui-show");
-                $("#submit").attr("onclick","customSubmit()");
+                //$("#submit").attr("onclick","customSubmit()");
                 i=1;
             }else {
                 //$("#customBtn").attr("value","自定义短链接码");
                 $("#customBtn").text("自定义短链接码");
                 $("#customDiv").attr("class","layui-hide");
-                $("#submit").attr("onclick","submitU()");
+                //$("#submit").attr("onclick","submitU()");
                 i=0;
             }
         }
         function submitU() {
-            var url = $("#url").val();
-            var urlJson = {"longUrl":url};
-            if(isURL(url)){
-                $.ajax({
-                    url:"submit",
-                    method:"post",
-                    data: JSON.stringify(urlJson),
-                    dataType:"json",
-                    contentType:"application/json",
-                    success:function (data) {
-                        //alert("写入数据库成功，短链接为"+data);
-                        $("#urlDisplayDiv").attr("class","layui-show");
-                        $("#urlA").attr("href","http://url302.pw/"+data);
-                        $("#urlA").text("http://url302.pw/"+data);
-                    },
-                    error: function() {
-                        alert("ajax提交失败");
-                    }
-                });
-            }else {
-                //alert("请输入带协议头的链接:http(s)://");
-                layer.tips('请输入带协议头的链接:http(s)://', '#url');
-                $("#url").focus();
-            }
-        }
-
-        function customSubmit() {
-            var url = $("#url").val();
-            var code = $("#code").val();
-            var urlJson = {"longUrl":url,"shortUrl":code};
-
-            if(checkCodeUrl(url,code)){
-                $.ajax({
-                    url:"customSubmit",
-                    method:"post",
-                    data: JSON.stringify(urlJson),
-                    dataType:"json",
-                    contentType:"application/json",
-                    success:function (data) {
-                        if(data.id == 1){
-                            //alert("短链接已存在，请换一个短连接");
-                            layer.tips('短链接已存在，请换一个短链接', '#code');
-                        }else {
-                            //alert("写入数据库成功，短链接为"+data.shortUrl+"长链接为"+data.longUrl);
-                            $("#urlDisplayDiv").attr("class","layui-show");
-                            $("#urlA").attr("href","http://url302.pw/"+data.shortUrl);
-                            $("#urlA").text("http://url302.pw/"+data.shortUrl);
+            if(i == 0) {
+                var url = $("#url").val();
+                var urlJson = {"longUrl": url};
+                if (isURL(url)) {
+                    $.ajax({
+                        url: "submit",
+                        method: "post",
+                        data: JSON.stringify(urlJson),
+                        dataType: "json",
+                        contentType: "application/json",
+                        success: function (data) {
+                            //alert("写入数据库成功，短链接为"+data);
+                            $("#urlDisplayDiv").attr("class", "layui-show");
+                            $("#urlA").attr("href", "http://url302.pw/" + data);
+                            $("#urlA").text("http://url302.pw/" + data);
+                        },
+                        error: function () {
+                            alert("ajax提交失败");
                         }
-                    },
-                    error: function() {
-                        alert("ajax提交失败");
-                    }
-                });
+                    });
+                } else {
+                    //alert("请输入带协议头的链接:http(s)://");
+                    layer.tips('请输入带协议头的链接:http(s)://', '#url');
+                    $("#url").focus();
+                }
+            }else if(i == 1){
+                var url = $("#url").val();
+                var code = $("#code").val();
+                var urlJson = {"longUrl":url,"shortUrl":code};
+
+                if(checkCodeUrl(url,code)){
+                    $.ajax({
+                        url:"customSubmit",
+                        method:"post",
+                        data: JSON.stringify(urlJson),
+                        dataType:"json",
+                        contentType:"application/json",
+                        success:function (data) {
+                            if(data.id == 1){
+                                //alert("短链接已存在，请换一个短连接");
+                                layer.tips('短链接已存在，请换一个短链接', '#code');
+                            }else {
+                                //alert("写入数据库成功，短链接为"+data.shortUrl+"长链接为"+data.longUrl);
+                                $("#urlDisplayDiv").attr("class","layui-show");
+                                $("#urlA").attr("href","http://url302.pw/"+data.shortUrl);
+                                $("#urlA").text("http://url302.pw/"+data.shortUrl);
+                            }
+                        },
+                        error: function() {
+                            alert("ajax提交失败");
+                        }
+                    });
+                }
             }
         }
+
+        // function customSubmit() {
+        //     var url = $("#url").val();
+        //     var code = $("#code").val();
+        //     var urlJson = {"longUrl":url,"shortUrl":code};
+        //
+        //     if(checkCodeUrl(url,code)){
+        //         $.ajax({
+        //             url:"customSubmit",
+        //             method:"post",
+        //             data: JSON.stringify(urlJson),
+        //             dataType:"json",
+        //             contentType:"application/json",
+        //             success:function (data) {
+        //                 if(data.id == 1){
+        //                     //alert("短链接已存在，请换一个短连接");
+        //                     layer.tips('短链接已存在，请换一个短链接', '#code');
+        //                 }else {
+        //                     //alert("写入数据库成功，短链接为"+data.shortUrl+"长链接为"+data.longUrl);
+        //                     $("#urlDisplayDiv").attr("class","layui-show");
+        //                     $("#urlA").attr("href","http://url302.pw/"+data.shortUrl);
+        //                     $("#urlA").text("http://url302.pw/"+data.shortUrl);
+        //                 }
+        //             },
+        //             error: function() {
+        //                 alert("ajax提交失败");
+        //             }
+        //         });
+        //     }
+        // }
 
         function isURL(str) {
             var reg = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
@@ -139,21 +176,8 @@
             }
             return true;
         }
-
-
-    </script>
-    <script>
-        layui.use('element', function(){
-            var element = layui.element;
-
         });
-        layui.use('form', function(){
-            var form = layui.form;
-        });
-        layui.use('layer', function(){
-            var layer = layui.layer;
 
-        });
     </script>
 </head>
 <body class="layui-layout-body">
@@ -209,7 +233,7 @@
             </div>
             <div class="layui-form-item">
                 <div class="layui-input-block">
-                    <button type="button" class="layui-btn" onclick="submitU()" id="submit">提交</button>
+                    <button type="button" class="layui-btn" id="submit">提交</button>
                 </div>
             </div>
             <div id="urlDisplayDiv" class="layui-hide">

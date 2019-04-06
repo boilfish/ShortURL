@@ -14,4 +14,16 @@
     <select id="selectNewUrlCount" resultType="int">
         select count(*) from url where DATE(timeStamp) = CURDATE()
     </select>
+
+    <select id="selectUrlByUrl" resultType="com.boilfish.ShortURL.model.UrlM">
+        select * from url
+        <where>
+            <if test="shortUrl != null">
+                shortUrl like '%${shortUrl}%'
+            </if>
+            <if test="longUrl != null">
+                longUrl like '%${longUrl}%'
+            </if>
+        </where>
+    </select>
 </mapper>

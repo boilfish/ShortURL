@@ -37,7 +37,7 @@
                         {fixed: 'right', width: '20%', align: 'center', toolbar: '#barDemo'}
                     ]]
                 });
-                table.on('tool(test)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+                table.on('tool(urltableF)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
                     var data = obj.data; //获得当前行数据
                     var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
                     var tr = obj.tr; //获得当前行 tr 的DOM对象
@@ -84,15 +84,6 @@
             }
 
     </script>
-    <script>
-        layui.use('element', function(){
-            var element = layui.element;
-
-        });
-        layui.use('form', function(){
-            var form = layui.form;
-        });
-    </script>
     <script type="text/html" id="barDemo">
         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
     </script>
@@ -118,7 +109,7 @@
     <div class="layui-main">
         <div style="height: 80px"></div>
         <div style="width: 80%;margin:0 auto;">
-            <table id="urlTable" lay-filter="test"></table>
+            <table id="urlTable" lay-filter="urltableF"></table>
         </div>
     </div>
     <div class="layui-footer" style="left:0px;text-align: right;">

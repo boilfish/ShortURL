@@ -7,18 +7,11 @@
     <script src="http://lib.sinaapp.com/js/jquery/1.12.4/jquery-1.12.4.min.js"></script>
     <script src="/js/layui/layui.js"></script>
     <script>
-        layui.use('element', function(){
-            var element = layui.element;
+        layui.use(['element','layer','form'],function () {
+            var element = layui.element
+                ,layer = layui.layer
+                ,form = layui.form;
 
-        });
-        layui.use('form', function(){
-            var form = layui.form;
-        });
-        layui.use('layer', function(){
-            var layer = layui.layer;
-        });
-    </script>
-    <script language="JavaScript">
         $(document).ready(function () {
             $.get("/checkUser.do",function (data) {
                 if(data.username != null && data.userid != 0){//已登录状态
@@ -34,6 +27,7 @@
                 }
                 else layer.tips('注册后可以删除自己的短链接', '#tips',{tips:3});
             },"json");
+        });
         });
     </script>
 </head>
@@ -67,7 +61,7 @@
                     <a class="" href="javascript:;">链接管理</a>
                     <dl class="layui-nav-child">
                         <dd><a href="/manage/statistics">数据量统计</a></dd>
-                        <dd><a href="javascript:;">查询链接</a></dd>
+                        <dd><a href="/manage/urlsearch">查询链接</a></dd>
                         <dd><a href="javascript:;">全站链接管理</a></dd>
                     </dl>
                 </li>

@@ -7,6 +7,11 @@
     <script src="http://lib.sinaapp.com/js/jquery/1.12.4/jquery-1.12.4.min.js"></script>
     <script src="/js/layui/layui.js"></script>
     <script language="JavaScript">
+        layui.use('layer', function(){
+            var layer = layui.layer;
+            //要使用layer各种模块需要在这里加载
+
+
         $(function () {
             $("#registerBtn").bind("click",switchLogReg);
             $("#loginSubmitBtn").bind("click",loginSubmit);
@@ -15,10 +20,9 @@
         });
 
         var i=0;
-        layui.use('layer', function(){
-            var layer = layui.layer;
 
-        });//注意，要使用layer各种模块需要在这里加载
+
+
         function switchLogReg() {
             if(i==0){
                 // $("#logDiv").attr("style","display: none");
@@ -185,6 +189,7 @@
                 layer.close(index);
             });
         }
+        });
     </script>
     <style>
 
