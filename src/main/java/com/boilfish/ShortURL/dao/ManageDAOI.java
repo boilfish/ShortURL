@@ -4,6 +4,7 @@ import com.boilfish.ShortURL.model.UrlM;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public interface ManageDAOI {
 
@@ -15,5 +16,7 @@ public interface ManageDAOI {
 
     int selectNewUrlCount();
 
-    List<UrlM> selectUrlByLongURL(String longUrl);
+    Map<String,Object> selectUrlByLongURL(String longUrl, int page, int limit);
+
+    Map<String,Object> selectUrlByShortURL(String shortUrl, int page, int limit);
 }

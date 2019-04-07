@@ -25,5 +25,18 @@
                 longUrl like '%${longUrl}%'
             </if>
         </where>
+        limit #{page},#{limit}
+    </select>
+
+    <select id="selectUrlByUrlCount" resultType="int">
+        select count(*) from url
+        <where>
+            <if test="shortUrl != null">
+                shortUrl like '%${shortUrl}%'
+            </if>
+            <if test="longUrl != null">
+                longUrl like '%${longUrl}%'
+            </if>
+        </where>
     </select>
 </mapper>

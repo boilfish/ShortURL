@@ -89,7 +89,7 @@ public class ManageDAOImpl implements ManageDAOI {
     }
 
     @Override
-    public List<UrlM> selectUrlByLongURL(String longUrl){
+    public Map<String,Object> selectUrlByLongURL(String longUrl, int page, int limit){
         String resource = "mybatis-config.xml";
         InputStream inputStream = null;
         try {
@@ -101,12 +101,47 @@ public class ManageDAOImpl implements ManageDAOI {
                 new SqlSessionFactoryBuilder().build(inputStream);
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        Map<String,Object> map = new HashMap<>();
-        map.put("shortUrl",longUrl);
+        Map<String,Object> map1 = new HashMap<>();
+        Map<String,Object> map2 = new HashMap<>();
+        map1.put("longUrl",longUrl);
+        map1.put("page",page);
+        map1.put("limit",limit);
 
-        List<UrlM> urlList = sqlSession.selectList("com.boilfish.ShortURL.mapper.ManageMapper.selectUrlByUrl",map);
+
+        List<UrlM> urlList = sqlSession.selectList("com.boilfish.ShortURL.mapper.ManageMapper.selectUrlByUrl",map1);
+        int count = sqlSession.selectOne("com.boilfish.ShortURL.mapper.ManageMapper.selectUrlByUrlCount",map1);
         sqlSession.close();
-        return urlList;
+        map2.put("urlList",urlList);
+        map2.put("count",count);
+        return map2;
+    }
+
+    @Override
+    public Map<String,Object> selectUrlByShortURL(String shortUrl, int page, int limit){
+        String resource = "mybatis-config.xml";
+        InputStream inputStream = null;
+        try {
+            inputStream = Resources.getResourceAsStream(resource);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        SqlSessionFactory sqlSessionFactory =
+                new SqlSessionFactoryBuilder().build(inputStream);
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        //带分页的就得返回map
+        Map<String,Object> map1 = new HashMap<>();
+        Map<String,Object> map2 = new HashMap<>();
+        map1.put("shortUrl",shortUrl);
+        map1.put("page",page);
+        map1.put("limit",limit);
+
+        List<UrlM> urlList = sqlSession.selectList("com.boilfish.ShortURL.mapper.ManageMapper.selectUrlByUrl",map1);
+        int count = sqlSession.selectOne("com.boilfish.ShortURL.mapper.ManageMapper.selectUrlByUrlCount",map1);
+        sqlSession.close();
+        map2.put("urlList",urlList);
+        map2.put("count",count);
+        return map2;
     }
 
 }

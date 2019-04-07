@@ -14,8 +14,6 @@
                 ,table = layui.table;
 
             $(document).ready(function () {
-                $("#longUrlSearchBtn").bind("click",searchLongUrl);
-                $("#shortUrlSearchBtn").bind("click",searchShortUrl);
                 $.get("/checkUser.do",function (data) {
                     if(data.username != null && data.userid != 0){//已登录状态
                         $("#headLogin").attr("style","display: block");
@@ -30,11 +28,9 @@
                     }
                     else layer.tips('注册后可以删除自己的短链接', '#tips',{tips:3});
                 },"json");
-
-                var dataObj = [];
                 table.render({
                     elem: '#urlTable',
-                    data: dataObj,
+                    url: '/manage/selectUrlByShortUrl.do',
                     page: 'true',
                     limit:5,
                     limits:[5],
@@ -77,35 +73,7 @@
                         });
                     }
                 });
-
-
             });
-            function searchLongUrl() {
-                table.reload('urlTable',
-                    {
-                        url: '/manage/selectUrlByLongUrl.do'
-                        , page: {
-                            curr: 1 //重新从第 1 页开始
-                        }
-                        , where: {
-                                longUrl: $("#longUrlSearchText").val()
-                        }
-                    }
-                );
-            }
-            function searchShortUrl() {
-                table.reload('urlTable',
-                    {
-                        url: '/manage/selectUrlByShortUrl.do'
-                        , page: {
-                            curr: 1 //重新从第 1 页开始
-                        }
-                        , where: {
-                            shortUrl: $("#shortUrlSearchText").val()
-                        }
-                    }
-                );
-            }
             Date.prototype.Format = function (fmt) { //author: meizz
                 var o = {
                     "M+": this.getMonth() + 1,                 //月份
@@ -130,7 +98,6 @@
     </script>
 </head>
 <body class="layui-layout-body">
-
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
         <div class="layui-logo"><img src="/logo.png" alt="Url302" height="45px" width="108px"></div>
@@ -160,7 +127,7 @@
                     <a class="" href="javascript:;">链接管理</a>
                     <dl class="layui-nav-child">
                         <dd><a href="/manage/statistics">数据量统计</a></dd>
-                        <dd><a href="javascript:;">查询链接</a></dd>
+                        <dd><a href="/manage/urlsearch">查询链接</a></dd>
                         <dd><a href="javascript:;">全站链接管理</a></dd>
                     </dl>
                 </li>
@@ -177,24 +144,6 @@
     </div>
 
     <div style="padding: 15px;" class="layui-body">
-        <div class="layui-form-item">
-            <div class="layui-inline">
-                <label style="width: 100px;" class="layui-form-label">长链接模糊查询</label>
-                <div class="layui-input-inline">
-                    <input type="text" id="longUrlSearchText" placeholder="请输入长链接" autocomplete="off" class="layui-input">
-                </div>
-                <div type="button" id="longUrlSearchBtn" class="layui-btn">查询</div>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <div class="layui-inline">
-                <label style="width: 100px;" class="layui-form-label">短码查询</label>
-                <div class="layui-input-inline">
-                    <input type="text" id="shortUrlSearchText" placeholder="请输入短码" autocomplete="off" class="layui-input">
-                </div>
-                <div type="button" id="shortUrlSearchBtn" class="layui-btn">查询</div>
-            </div>
-        </div>
         <div>
             <table id="urlTable" lay-filter="urltableF"></table>
         </div>

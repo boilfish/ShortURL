@@ -25,6 +25,9 @@ public class ManageServerImpl implements ManageServerI {
         return map;
     }
 
-//    @Override
-//    public List<UrlM> selectUrlByLongURL(){}
+    @Override
+    public Map<String,Object> selectUrlByLongURL(String longUrl, int page, int limit){return manageDAO.selectUrlByLongURL(longUrl,page,limit);}
+
+    @Override
+    public Map<String,Object> selectUrlByShortURL(String shortUrl, int page, int limit){return manageDAO.selectUrlByShortURL(shortUrl,page,limit);}
 }
