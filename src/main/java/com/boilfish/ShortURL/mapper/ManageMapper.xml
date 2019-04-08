@@ -39,4 +39,35 @@
             </if>
         </where>
     </select>
+
+    <select id="selectUserByUserM" resultType="com.boilfish.ShortURL.model.UserM">
+        select * from user
+        <where>
+            <if test="data.id != 0">
+                id = #{data.id}
+            </if>
+            <if test="data.name != null">
+                name like '%${data.name}%'
+            </if>
+            <if test="data.mail != null">
+                mail like '%${data.mail}%'
+            </if>
+        </where>
+        limit #{page},#{limit}
+    </select>
+
+    <select id="selectUserCountByUserM" resultType="int">
+        select count(*) from user
+        <where>
+            <if test="data.id != 0">
+                id = #{data.id}
+            </if>
+            <if test="data.name != null">
+                name like '%${data.name}%'
+            </if>
+            <if test="data.mail != null">
+                mail like '%${data.mail}%'
+            </if>
+        </where>
+    </select>
 </mapper>

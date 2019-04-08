@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/js/layui/css/layui.css">
+    <title>Url302</title>
+    <script src="http://lib.sinaapp.com/js/jquery/1.12.4/jquery-1.12.4.min.js"></script>
+    <script src="/js/layui/layui.js"></script>
+    <script>
+        layui.use(['element','layer','form','table'],function () {
+            var element = layui.element
+                ,layer = layui.layer
+                ,form = layui.form
+                ,table = layui.table;
+
+            $(document).ready(function () {
+                $("#searchUserByIdBtn").bind("click",searchUserById);
+                $("#searchUserByNameBtn").bind("click",searchUserByName);
+                $("#searchUserByMailBtn").bind("click",searchUserByMail);
+                $.get("/checkUser.do",function (data) {
+                    if(data.username != null && data.userid != 0){//已登录状态
+                        $("#headLogin").attr("style","display: block");
+                        $("#headUnLogin").attr("style","display: none");
+                        $("#headUser").html("<img src=\"http://t.cn/EUJSIhs\" class=\"layui-nav-img\">"+data.username+"<span class=\"layui-nav-more\"></span>");
+                    }else if(data.userid == 0){//管理员已登录
+                        $("#headUnLogin").attr("style","display: none");
+                        $("#headLogin").attr("style","display: block");
+                        $("#userUrlManage").hide();
+                        $("#indexManageEnter").show();
+                        $("#headUser").html("<img src=\"http://t.cn/EUJSIhs\" class=\"layui-nav-img\">"+data.username+"<span class=\"layui-nav-more\"></span>");
+                    }
+                    else layer.tips('注册后可以删除自己的短链接', '#tips',{tips:3});
+                },"json");
+
+                var dataObj = [];
+                table.render({
+                    elem: '#userTable',
+                    data: dataObj,
+                    page: 'true',
+                    limit:5,
+                    limits:[5],
+
+                    cols:[[
+                        {field:'id' ,fixed:'left' ,title:'userID' ,maxWidth:'65' , sort: 'true'},
+                        {field: 'name', title: '用户名', minWidth: '200'},
+                        {field: 'mail', title: '邮箱', minWidth: '200'},
+                        {field: 'timeStamp', title: '注册时间', minWidth: '160', sort: 'true', templet: function (d) {
+                                var date = new Date();
+                                date.setTime(d.timeStamp);
+                                return date.Format("yyyy-MM-dd hh:mm:ss");
+                            }
+                        }
+                    ]]
+                });
+
+
+            });//document.ready结束
+            function searchUserById() {
+                table.reload('userTable',
+                    {
+                        url: '/manage/selecrUserByUser.do'
+                        , page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                        , where: {
+                            data: $("#searchUserByIdText").val(),
+                            mode: "idmode"
+                        }
+                    }
+                );
+            }
+            function searchUserByName() {
+                table.reload('userTable',
+                    {
+                        url: '/manage/selecrUserByUser.do'
+                        , page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                        , where: {
+                            data: $("#searchUserByNameText").val(),
+                            mode: "namemode"
+                        }
+                    }
+                );
+            }
+            function searchUserByMail() {
+                table.reload('userTable',
+                    {
+                        url: '/manage/selecrUserByUser.do'
+                        , page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                        , where: {
+                            data: $("#searchUserByMailText").val(),
+                            mode: "mailmode"
+                        }
+                    }
+                );
+            }
+            Date.prototype.Format = function (fmt) { //author: meizz
+                var o = {
+                    "M+": this.getMonth() + 1,                 //月份
+                    "d+": this.getDate(),                    //日
+                    "h+": this.getHours(),                   //小时
+                    "m+": this.getMinutes(),                 //分
+                    "s+": this.getSeconds(),                 //秒
+                    "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+                    "S": this.getMilliseconds()             //毫秒
+                };
+                if (/(y+)/.test(fmt))
+                    fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+                for (var k in o)
+                    if (new RegExp("(" + k + ")").test(fmt))
+                        fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+                return fmt;
+            }
+        });
+    </script>
+    <script type="text/html" id="barDemo">
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    </script>
+</head>
+<body class="layui-layout-body">
+
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo"><img src="/logo.png" alt="Url302" height="45px" width="108px"></div>
+        <!-- 头部区域 -->
+        <ul id="headLogin" style="display: none" class="layui-nav layui-layout-right">
+            <li class="layui-nav-item"><a href="/">首页</a></li>
+            <li id="userUrlManage" class="layui-nav-item"><a href="/user/userUrl">短链接管理</a></li>
+            <li class="layui-nav-item">
+                <a id="headUser" href="">
+                    <!--<img src="http://t.cn/EUJSIhs" class="layui-nav-img">贤-->
+                </a>
+                <dl class="layui-nav-child">
+                    <dd id="indexManageEnter" style="display: none"><a href="/manage">管理后台</a></dd>
+                    <dd><a href="/logout">登出</a></dd>
+                </dl>
+            </li>
+        </ul>
+        <ul id = headUnLogin style="display: block" class="layui-nav layui-layout-right">
+            <li id="tips" class="layui-nav-item"><a href="/login">登录/注册</a></li>
+        </ul>
+    </div>
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域 -->
+            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;">链接管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="/manage/statistics">数据量统计</a></dd>
+                        <dd><a href="javascript:;">查询链接</a></dd>
+                        <dd><a href="javascript:;">全站链接管理</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">用户管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">查询帐号</a></dd>
+                        <dd><a href="javascript:;">账号信息维护</a></dd>
+                        <dd><a href="">全站账号管理</a></dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div style="padding: 15px;" class="layui-body">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label style="width: 100px;" class="layui-form-label">按照ID查询</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="searchUserByIdText" placeholder="请输入userID" autocomplete="off" class="layui-input">
+                </div>
+                <div type="button" id="searchUserByIdBtn" class="layui-btn">查询</div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label style="width: 100px;" class="layui-form-label">按照用户名查询</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="searchUserByNameText" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                </div>
+                <div type="button" id="searchUserByNameBtn" class="layui-btn">查询</div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label style="width: 100px;" class="layui-form-label">按照邮箱查询</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="searchUserByMailText" placeholder="请输入用户注册邮箱" autocomplete="off" class="layui-input">
+                </div>
+                <div type="button" id="searchUserByMailBtn" class="layui-btn">查询</div>
+            </div>
+        </div>
+        <div>
+            <table id="userTable" lay-filter="urltableF"></table>
+        </div>
+    </div>
+    <div class="layui-footer" style="left:0px;text-align: right;">
+        <!-- 底部固定区域 -->
+        © url302.pw - ShortURL&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="https://github.com/boilfish/ShortURL" target="_blank" style="color: #9F9F9F;font-size: 20px">/*GitHub*/</a>
+    </div>
+
+</div>
+
+</body>
+</html>

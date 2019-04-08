@@ -2,6 +2,7 @@ package com.boilfish.ShortURL.service;
 
 import com.boilfish.ShortURL.dao.ManageDAOI;
 import com.boilfish.ShortURL.model.UrlM;
+import com.boilfish.ShortURL.model.UserM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,4 +31,7 @@ public class ManageServerImpl implements ManageServerI {
 
     @Override
     public Map<String,Object> selectUrlByShortURL(String shortUrl, int page, int limit){return manageDAO.selectUrlByShortURL(shortUrl,page,limit);}
+
+    @Override
+    public Map<String,Object> selecrUserByUser(UserM user, int page, int limit){return manageDAO.selecrUserByUser(user,page,limit);}
 }

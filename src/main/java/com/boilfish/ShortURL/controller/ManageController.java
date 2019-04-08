@@ -38,6 +38,9 @@ public class ManageController {
     @RequestMapping("manageurl")
     public String manageUrl() {return "/WEB-INF/html/manageurl.html";}
 
+    @RequestMapping("users")
+    public String manageUsers() {return "/WEB-INF/html/usersManage.html";}
+
     @ResponseBody
     @RequestMapping("selectStatistics.do")
     public JSONObject selectStatistics(){
@@ -85,6 +88,39 @@ public class ManageController {
         object.put("msg","");
         object.put("count",count);
         object.put("data",map.get("urlList"));
+        return object;
+    }
+
+    @ResponseBody
+    @RequestMapping("selecrUserByUser.do")
+    public JSONObject selecrUserByUser (HttpServletRequest request){
+        int page = Integer.parseInt(request.getParameter("page")) ;
+        int page2=(page-1)*5;
+        int limit = Integer.parseInt(request.getParameter("limit"));
+        limit=5;
+        UserM user = new UserM();
+
+        String mode = request.getParameter("mode");
+        Map<String,Object> map = new HashMap<>();
+        if(mode.equals("idmode")) {
+            int userId = Integer.parseInt(request.getParameter("data"));
+            user.setId(userId);
+            map = manageServer.selecrUserByUser(user,page2,limit);
+        }else if(mode.equals("namemode")){
+            String userName = request.getParameter("data");
+            user.setName(userName);
+            map = manageServer.selecrUserByUser(user,page2,limit);
+        }else if(mode.equals("mailmode")){
+            String userMail = request.getParameter("data");
+            user.setMail(userMail);
+            map = manageServer.selecrUserByUser(user,page2,limit);
+        }
+        int count = (int)map.get("count");
+        JSONObject object = new JSONObject();
+        object.put("code",0);
+        object.put("msg","");
+        object.put("count",count);
+        object.put("data",map.get("userList"));
         return object;
     }
 
