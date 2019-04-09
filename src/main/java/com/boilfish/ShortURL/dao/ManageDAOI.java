@@ -24,4 +24,6 @@ public interface ManageDAOI {
     Map<String,Object> selecrUserByUser(UserM user, int page, int limit);
 
     boolean updateUser(UserM user);
+
+    int deleteUser(UserM user);
 }

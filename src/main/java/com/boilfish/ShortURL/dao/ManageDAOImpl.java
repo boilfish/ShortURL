@@ -195,4 +195,24 @@ public class ManageDAOImpl implements ManageDAOI {
         else return false;
     }
 
+    @Override
+    public int deleteUser (UserM user){
+        String resource = "mybatis-config.xml";
+        InputStream inputStream = null;
+        try {
+            inputStream = Resources.getResourceAsStream(resource);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        SqlSessionFactory sqlSessionFactory =
+                new SqlSessionFactoryBuilder().build(inputStream);
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        int code = sqlSession.delete("com.boilfish.ShortURL.mapper.ManageMapper.deleteUserById",user);
+        sqlSession.commit();
+        sqlSession.close();
+        if(code == 1) return 1;
+        else return 0;
+    }
+
 }

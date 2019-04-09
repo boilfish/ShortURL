@@ -31,7 +31,7 @@
                 }
             },"json");
             // 以上为标题栏
-            $.get("selectStatistics.do",function (data) {
+            $.get("/manage/selectStatistics.do",function (data) {
                 $("#regNum").html(data.regNum);
                 $("#urlNum").html(data.urlNum);
                 $("#tdNewUrl").html(data.tdNewUrl);

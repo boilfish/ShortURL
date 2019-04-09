@@ -27,7 +27,7 @@ public class ManageController {
     private UserServerI userServer;
 
     @RequestMapping("")
-    public String index(){ return "/WEB-INF/html/manageindex.html"; }
+    public String index(){ return "/WEB-INF/html/statistics.html"; }
 
     @RequestMapping("statistics")
     public String statistics() {return "/WEB-INF/html/statistics.html";}
@@ -43,6 +43,9 @@ public class ManageController {
 
     @RequestMapping("updateuser")
     public String updateUsers() {return "/WEB-INF/html/updateuser.html";}
+
+    @RequestMapping("allusers")
+    public String allUsers() {return "/WEB-INF/html/usersall.html";}
 
     @ResponseBody
     @RequestMapping("selectStatistics.do")
@@ -139,5 +142,9 @@ public class ManageController {
         if(manageServer.updateUser(user) == true) return 1;
         else return 0;
     }
+
+    @ResponseBody
+    @RequestMapping("deleteUser.do")
+    public int deleteUser(@RequestBody UserM user){ return manageServer.deleteUser(user); }
 
 }

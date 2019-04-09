@@ -37,4 +37,7 @@ public class ManageServerImpl implements ManageServerI {
 
     @Override
     public boolean updateUser (UserM user){return manageDAO.updateUser(user);}
+
+    @Override
+    public int deleteUser (UserM user){return manageDAO.deleteUser(user);}
 }

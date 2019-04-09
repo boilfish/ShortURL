@@ -29,49 +29,24 @@
                     else layer.tips('注册后可以删除自己的短链接', '#tips',{tips:3});
                 },"json");
                 table.render({
-                    elem: '#urlTable',
-                    url: '/manage/selectUrlByShortUrl.do',
+                    elem: '#userTable',
+                    url: '/manage/selecrUserByUser.do',
+                    where: {mode: "namemode"},
                     page: 'true',
                     limit:5,
                     limits:[5],
 
                     cols:[[
-                        {field:'id' ,fixed:'left' ,title:'ID' ,minWidth:'65' , sort: 'true'},
-                        {field: 'shortUrl', title: '短链接', minWidth: '206',templet:function (d) {
-                                var surl = "http://url302.pw/"+d.shortUrl;
-                                return surl;
-                            }},
-                        {field: 'longUrl', title: '长链接', minWidth: '200'},
-                        {field: 'userId', title: '创建用户ID', minWidth: '65'},
-                        {field: 'timeStamp', title: '创建时间', minWidth: '160', sort: 'true', templet: function (d) {
+                        {field:'id' ,fixed:'left' ,title:'userID' ,maxWidth:'65' , sort: 'true'},
+                        {field: 'name', title: '用户名', minWidth: '200'},
+                        {field: 'mail', title: '邮箱', minWidth: '200'},
+                        {field: 'timeStamp', title: '注册时间', minWidth: '160', sort: 'true', templet: function (d) {
                                 var date = new Date();
                                 date.setTime(d.timeStamp);
                                 return date.Format("yyyy-MM-dd hh:mm:ss");
                             }
-                        },
-                        {fixed: 'right', width: '20%', align: 'center', toolbar: '#barDemo'}
+                        }
                     ]]
-                });
-                table.on('tool(urltableF)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
-                    var data = obj.data; //获得当前行数据
-                    var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
-                    var tr = obj.tr; //获得当前行 tr 的DOM对象
-
-                    if (layEvent === 'del') { //删除
-                        layer.confirm('真的删除这个短链接么', function (index) {
-                            obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
-                            layer.close(index);
-                            //向服务端发送删除指令
-                            var json = {"id": data.id, "userId": data.userId};
-                            // alert(JSON.stringify(json));
-                            $.ajax({
-                                url: "/manage/adminDeleteOneUrl.do",
-                                method: "post",
-                                data: JSON.stringify(json),
-                                contentType: "application/json",
-                            });
-                        });
-                    }
                 });
             });
             Date.prototype.Format = function (fmt) { //author: meizz
@@ -136,7 +111,7 @@
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;">查询帐号</a></dd>
                         <dd><a href="javascript:;">账号信息维护</a></dd>
-                        <dd><a href="javascript:;">全站账号管理</a></dd>
+                        <dd><a href="">全站账号管理</a></dd>
                     </dl>
                 </li>
             </ul>
@@ -145,7 +120,7 @@
 
     <div style="padding: 15px;" class="layui-body">
         <div>
-            <table id="urlTable" lay-filter="urltableF"></table>
+            <table id="userTable" lay-filter="usertableF"></table>
         </div>
     </div>
     <div class="layui-footer" style="left:0px;text-align: right;">

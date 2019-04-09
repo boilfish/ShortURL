@@ -17,6 +17,7 @@
                 $("#updateUserName").bind("click",updateUserName);
                 $("#updateUserPasswd").bind("click",updateUserPasswd);
                 $("#updateUserMail").bind("click",updateUserMail);
+                $("#deleteUser").bind("click",deleteUser);
                 $.get("/checkUser.do",function (data) {
                     if(data.username != null && data.userid != 0){//已登录状态
                         $("#headLogin").attr("style","display: block");
@@ -162,6 +163,36 @@
                     layer.close(index);
                 });
             }
+            function deleteUser() {
+                var username = $("#userName").text();
+                layer.confirm("请再次确认，是否要删除用户 "+username,{title:'警告！此操作不可恢复'}, function(index){
+                    //do something
+                    var userJson = {'id': $("#userId").text()};
+                    $.ajax({
+                        type: "POST",
+                        url: "/manage/deleteUser.do",
+
+                        data: JSON.stringify(userJson),
+                        contentType: "application/json",
+
+                        success: function (data) {
+                            if(data == 1)
+                                layer.msg('删除用户成功',
+                                    {anim: 0, time: 2000},
+                                    function(){
+                                        //do something
+                                        searchUser();
+                                    });
+                            else layer.msg('删除失败');
+                        },
+                        error: function () {
+                            layer.msg('ajax提交失败');
+                        }
+                    });
+
+                    layer.close(index);
+                });
+            }
 
 
         });
@@ -233,7 +264,7 @@
     <div style="padding: 15px;" class="layui-body">
         <div class="layui-form-item">
             <div class="layui-inline">
-                <label style="width: 100px;" class="layui-form-label">输入要管理的用户ID</label>
+                <label style="width: 130px;" class="layui-form-label">输入要管理的用户ID</label>
                 <div class="layui-input-inline">
                     <input type="text" id="userIdText" placeholder="请输入用户ID" autocomplete="off" class="layui-input">
                 </div>
@@ -262,6 +293,7 @@
             <div type="button" id="updateUserName" class="layui-btn">修改用户名</div>
             <div type="button" id="updateUserPasswd" class="layui-btn">修改密码</div>
             <div type="button" id="updateUserMail" class="layui-btn">修改用户邮箱</div>
+            <div type="button" style="background: #f44336" id="deleteUser" class="layui-btn">删除该用户</div>
         </div>
     </div>
 

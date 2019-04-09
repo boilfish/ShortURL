@@ -31,7 +31,11 @@
             <mvc:mapping path="/user/selectUrlByUser.do"/>
             <mvc:mapping path="/user/userUrl"/>
             <mvc:mapping path="/user/deleteOneUrl.do"/>
-            <bean class="com.boilfish.ShortURL.interceptor.LoginInterceptor"></bean>
+            <bean class="com.boilfish.ShortURL.interceptor.LoginInterceptor"/>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/manage/**"/>
+            <bean class="com.boilfish.ShortURL.interceptor.ManageInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
 

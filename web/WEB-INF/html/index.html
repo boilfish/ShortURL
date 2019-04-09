@@ -27,6 +27,7 @@
             // );
             $("#customBtn").bind("click",clickCustomBtn);
             $("#submit").bind("click",submitU);
+            $("#tip").bind("click",tip);
             $.get("checkUser.do",function (data) {
                 if(data.username != null && data.userid != 0){//已登录状态
                     $("#headLogin").attr("style","display: block");
@@ -176,6 +177,11 @@
             }
             return true;
         }
+        function tip() {
+            layer.alert('使用本站请遵守当地法律，本站有权对违规链接进行清理</br>' +
+                '本站对您违规使用本站服务所导致的任何损害不承担任何责任</br>' +
+                '举报违规链接请在右侧GitHub邮件联系站长');
+        }
         });
 
     </script>
@@ -249,7 +255,8 @@
     </div>
     <div class="layui-footer" style="left:0px;text-align: right;">
         <!-- 底部固定区域 -->
-        © url302.pw - ShortURL&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="javascript:;" id="tip" style="text-align: left; color: #9F9F9F;font-size: 12px">免责声明</a>
+        © url302.pw - ShortURL
         <a href="https://github.com/boilfish/ShortURL" target="_blank" style="color: #9F9F9F;font-size: 20px">/*GitHub*/</a>
     </div>
 
