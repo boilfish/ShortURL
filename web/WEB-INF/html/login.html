@@ -145,29 +145,6 @@
                 title: '请输入预置管理员密钥',
                 area: ['200px', '20px'] //自定义文本域宽高
             }, function(value, index, elem){
-                // $.ajax({
-                //     url:"user/manageLogin.do",
-                //     method:"post",
-                //     data: value,
-                //     dataType:"int",
-                //     contentType:"text/plain",
-                //     success:function (data) {
-                //         if(data == 1){
-                //             layer.msg('注册成功，现在跳转到首页',
-                //                 {anim: 0, time: 2000},
-                //                 function(){
-                //                     //do something
-                //                     $(location).attr('href','/');
-                //                 });
-                //         }else if (data == 2){
-                //             //alert("用户名已存在，请换一个用户名");
-                //             layer.tips('用户名已存在，请换一个用户名', '#username');
-                //         }else alert("unknown error");
-                //     },
-                //     error: function() {
-                //         alert("ajax提交失败");
-                //     }
-                // });
                 $.post(
                     "user/manageLogin.do",
                     {'passwd':value},

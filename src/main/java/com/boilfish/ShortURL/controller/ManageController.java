@@ -41,6 +41,9 @@ public class ManageController {
     @RequestMapping("users")
     public String manageUsers() {return "/WEB-INF/html/usersManage.html";}
 
+    @RequestMapping("updateuser")
+    public String updateUsers() {return "/WEB-INF/html/updateuser.html";}
+
     @ResponseBody
     @RequestMapping("selectStatistics.do")
     public JSONObject selectStatistics(){
@@ -128,6 +131,13 @@ public class ManageController {
     @ResponseStatus(HttpStatus.OK)
     public void delUrlById(@RequestBody UrlM url){
             userServer.deleteUrlById(url);
+    }
+
+    @ResponseBody
+    @RequestMapping("updateUser.do")
+    public int updateUser(@RequestBody UserM user){
+        if(manageServer.updateUser(user) == true) return 1;
+        else return 0;
     }
 
 }

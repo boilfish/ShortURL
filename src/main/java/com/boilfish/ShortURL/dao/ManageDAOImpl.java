@@ -175,4 +175,24 @@ public class ManageDAOImpl implements ManageDAOI {
         return map2;
     }
 
+    @Override
+    public boolean updateUser (UserM user){
+        String resource = "mybatis-config.xml";
+        InputStream inputStream = null;
+        try {
+            inputStream = Resources.getResourceAsStream(resource);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        SqlSessionFactory sqlSessionFactory =
+                new SqlSessionFactoryBuilder().build(inputStream);
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        int code = sqlSession.update("com.boilfish.ShortURL.mapper.ManageMapper.updateUser",user);
+        sqlSession.commit();
+        sqlSession.close();
+        if(code == 1) return true;
+        else return false;
+    }
+
 }

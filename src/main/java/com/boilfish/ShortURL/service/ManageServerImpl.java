@@ -34,4 +34,7 @@ public class ManageServerImpl implements ManageServerI {
 
     @Override
     public Map<String,Object> selecrUserByUser(UserM user, int page, int limit){return manageDAO.selecrUserByUser(user,page,limit);}
+
+    @Override
+    public boolean updateUser (UserM user){return manageDAO.updateUser(user);}
 }

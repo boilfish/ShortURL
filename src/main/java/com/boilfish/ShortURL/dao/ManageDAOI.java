@@ -22,4 +22,6 @@ public interface ManageDAOI {
     Map<String,Object> selectUrlByShortURL(String shortUrl, int page, int limit);
 
     Map<String,Object> selecrUserByUser(UserM user, int page, int limit);
+
+    boolean updateUser(UserM user);
 }

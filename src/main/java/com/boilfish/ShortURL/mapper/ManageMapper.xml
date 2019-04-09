@@ -70,4 +70,21 @@
             </if>
         </where>
     </select>
+
+    <update id="updateUser">
+        update user
+        <set>
+            <if test="name != null">
+                name = #{name}
+            </if>
+            <if test="passwd != null">
+                passwd = #{passwd}
+            </if>
+            <if test="mail != null">
+                mail = #{mail}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
 </mapper>
