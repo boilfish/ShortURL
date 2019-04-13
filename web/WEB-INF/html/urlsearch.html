@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/js/layui/css/layui.css">
-    <title>Url302</title>
+    <title>Url302-查询链接</title>
     <script src="http://lib.sinaapp.com/js/jquery/1.12.4/jquery-1.12.4.min.js"></script>
     <script src="/js/layui/layui.js"></script>
     <script>
@@ -40,20 +40,20 @@
                     limits:[5],
 
                     cols:[[
-                        {field:'id' ,fixed:'left' ,title:'ID' ,minWidth:'65' , sort: 'true'},
-                        {field: 'shortUrl', title: '短链接', minWidth: '206',templet:function (d) {
+                        {field:'id' ,fixed:'left' ,title:'ID' ,width:'65' , sort: 'true'},
+                        {field: 'shortUrl', title: '短链接', width: '206',templet:function (d) {
                                 var surl = "http://url302.pw/"+d.shortUrl;
                                 return surl;
                             }},
-                        {field: 'longUrl', title: '长链接', minWidth: '200'},
-                        {field: 'userId', title: '创建用户ID', minWidth: '65'},
-                        {field: 'timeStamp', title: '创建时间', minWidth: '160', sort: 'true', templet: function (d) {
+                        {field: 'longUrl', title: '长链接', minWidth: '300'},
+                        {field: 'userId', title: '创建用户ID', width: '100'},
+                        {field: 'timeStamp', title: '创建时间', width: '300', sort: 'true', templet: function (d) {
                                 var date = new Date();
                                 date.setTime(d.timeStamp);
                                 return date.Format("yyyy-MM-dd hh:mm:ss");
                             }
                         },
-                        {fixed: 'right', width: '20%', align: 'center', toolbar: '#barDemo'}
+                        {fixed: 'right', width: '130', align: 'center', toolbar: '#barDemo'}
                     ]]
                 });
                 table.on('tool(urltableF)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
@@ -160,16 +160,16 @@
                     <a class="" href="javascript:;">链接管理</a>
                     <dl class="layui-nav-child">
                         <dd><a href="/manage/statistics">数据量统计</a></dd>
-                        <dd><a href="javascript:;">查询链接</a></dd>
-                        <dd><a href="javascript:;">全站链接管理</a></dd>
+                        <dd><a href="/manage/urlsearch">查询链接</a></dd>
+                        <dd><a href="/manage/manageurl">全站链接管理</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
                     <a href="javascript:;">用户管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">查询帐号</a></dd>
-                        <dd><a href="javascript:;">账号信息维护</a></dd>
-                        <dd><a href="">全站账号管理</a></dd>
+                        <dd><a href="/manage/users">查询帐号</a></dd>
+                        <dd><a href="/manage/updateuser">账号信息维护</a></dd>
+                        <dd><a href="/manage/allusers">全站用户查看</a></dd>
                     </dl>
                 </li>
             </ul>

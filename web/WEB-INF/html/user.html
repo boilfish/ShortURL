@@ -11,6 +11,11 @@
             $.get("/checkUser.do", function (data) {
                 $("#headUser").html("<img src=\"http://t.cn/EUJSIhs\" class=\"layui-nav-img\">" + data.username + "<span class=\"layui-nav-more\"></span>");
             }, "json");
+            layui.use(['element','form','layer'],function () {
+                var element = layui.element
+                    , form = layui.form
+                    , layer = layui.layer;
+            });
         });
             layui.use('table', function () {
                 var table = layui.table;
@@ -22,19 +27,19 @@
                     limits:[5],
 
                     cols: [[
-                        {field: 'timeStamp', fixed: 'left', title: '创建时间', minWidth: '160', sort: 'true', templet: function (d) {
+                        {field: 'timeStamp', fixed: 'left', title: '创建时间', width: '160', sort: 'true', templet: function (d) {
                                 var date = new Date();
                                 date.setTime(d.timeStamp);
                                 return date.Format("yyyy-MM-dd hh:mm:ss");
                             }
                         },
-                        {field: 'shortUrl', title: '短链接', minWidth: '180',templet:function (d) {
+                        {field: 'shortUrl', title: '短链接', width: '180',templet:function (d) {
                                 var surl = "http://url302.pw/"+d.shortUrl;
                                 return surl;
                             }},
                         {field: 'longUrl', title: '长链接', minWidth: '500'},
 
-                        {fixed: 'right', width: '20%', align: 'center', toolbar: '#barDemo'}
+                        {fixed: 'right', width: '150', align: 'center', toolbar: '#barDemo'}
                     ]]
                 });
                 table.on('tool(urltableF)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
@@ -91,7 +96,7 @@
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
-        <div class="layui-logo">Short-URL</div>
+        <div class="layui-logo"><img src="/logo.png" alt="Url302" height="45px" width="108px"></div>
         <!-- 头部区域-->
         <ul id="headLogin" style="display: block" class="layui-nav layui-layout-right">
             <li class="layui-nav-item"><a href="/">首页</a></li>

@@ -18,6 +18,7 @@ public class UrlServerImpl implements UrlServerI {
     @Autowired
     private UrlDAOI UrlDAO;
 
+    //发号器
     @Override
     public String randomCode(){
         StringBuffer s = new StringBuffer();
