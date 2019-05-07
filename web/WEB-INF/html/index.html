@@ -32,13 +32,13 @@
                 if(data.username != null && data.userid != 0){//已登录状态
                     $("#headLogin").attr("style","display: block");
                     $("#headUnLogin").attr("style","display: none");
-                    $("#headUser").html("<img src=\"http://t.cn/EUJSIhs\" class=\"layui-nav-img\">"+data.username+"<span class=\"layui-nav-more\"></span>");
+                    $("#headUser").html("<img src=\"/favicon.ico\" class=\"layui-nav-img\">"+data.username+"<span class=\"layui-nav-more\"></span>");
                 }else if(data.userid == 0){//管理员已登录
                     $("#headUnLogin").attr("style","display: none");
                     $("#headLogin").attr("style","display: block");
                     $("#userUrlManage").hide();
                     $("#indexManageEnter").show();
-                    $("#headUser").html("<img src=\"http://t.cn/EUJSIhs\" class=\"layui-nav-img\">"+data.username+"<span class=\"layui-nav-more\"></span>");
+                    $("#headUser").html("<img src=\"/favicon.ico\" class=\"layui-nav-img\">"+data.username+"<span class=\"layui-nav-more\"></span>");
                 }
                 else layer.tips('注册后可以删除自己的短链接', '#tips',{tips:3});
             },"json");
@@ -189,7 +189,7 @@
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
-        <div class="layui-logo"><img src="/logo.png" alt="Url302" height="45px" width="108px"></div>
+        <div class="layui-logo"><img src="/logov2.png" alt="Url302" height="40px" width="120px"></div>
         <!-- 头部区域 -->
         <ul id="headLogin" style="display: none" class="layui-nav layui-layout-right">
             <li class="layui-nav-item"><a href="/">首页</a></li>
@@ -261,5 +261,6 @@
     </div>
 
     </div>
+<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
 </body>
 </html>
