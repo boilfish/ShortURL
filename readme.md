@@ -28,4 +28,3 @@ Frameworks and Tools
 About
 -----------------------------------
 * GitHub：https://github.com/boilfish/ShortURL
-* Demo：http://url302.pw
